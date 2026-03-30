@@ -25,11 +25,27 @@ const Login = () => {
         password:password
       });
 
+      const token = res.data.access;
+      const role = res.data.role;
+
+      // store JWT token
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+
       alert("Login successful");
 
       console.log(res.data);
 
-      navigate("/");
+      // role based redirect
+      if(role === 1){
+        navigate("/admin/dashboard");
+      }
+      else if(role === 2){
+        navigate("/vendor/dashboard");
+      }
+      else{
+        navigate("/");
+      }
 
     }catch(err){
 
