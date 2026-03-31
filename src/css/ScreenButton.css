@@ -1,0 +1,37 @@
+.screen-buttons{
+position:fixed;
+right:20px;
+bottom:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+z-index:1000;
+}
+
+/* whatsapp */
+.whatsapp-btn{
+width:40px;
+height:40px;
+background:#25D366;
+color:white;
+font-size:24px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+text-decoration:none;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* scroll top */
+.top-btn{
+width:40px;
+height:40px;
+border:none;
+background:#333;
+color:white;
+font-size:20px;
+border-radius:50%;
+cursor:pointer;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}

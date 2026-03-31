@@ -27,14 +27,14 @@ const Login = () => {
 
       const token = res.data.access;
       const role = res.data.role;
+      const emailData = res.data.email;
 
-      // store JWT token
+      // store login data
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
+      localStorage.setItem("email", emailData);
 
       alert("Login successful");
-
-      console.log(res.data);
 
       // role based redirect
       if(role === 1){
@@ -46,6 +46,9 @@ const Login = () => {
       else{
         navigate("/");
       }
+
+      // reload so navbar updates
+      window.location.reload();
 
     }catch(err){
 
@@ -94,9 +97,12 @@ const Login = () => {
 
         </form>
 
+        {/* Signup Link */}
         <p className="auth-link">
-          Don't have an account?
-          <span onClick={()=>navigate("/signup")}> Sign up</span>
+          Don't have an account?{" "}
+          <span className="signup-link" onClick={()=>navigate("/signup")}>
+            Sign up
+          </span>
         </p>
 
       </div>

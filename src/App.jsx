@@ -14,6 +14,7 @@ import Dashboard from './admin/pages/Dashboard'
 import Users from './admin/pages/Users'
 import Vendors from './admin/pages/Vendors'
 import VendorRequests from './admin/pages/VendorRequest'
+import ScreenButton from './components/ScreenButton'
 
 function App() {
 
@@ -23,14 +24,14 @@ function App() {
 
       <Routes>
 
-        {/* Public Routes */}
+        {/* public routes */}
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path="/signup" element={<Signup />} />
         <Route path="/vendor-signup" element={<VendorSignup />} />
         <Route path="/become-teacher" element={<VendorSignup />} />
 
-        {/* Admin Routes */}
+        {/* admin routes */}
         <Route
           path="/admin/dashboard"
           element={
@@ -70,6 +71,7 @@ function App() {
       </Routes>
 
       <Footer/>
+      <ScreenButton/>
     </>
   )
 }
