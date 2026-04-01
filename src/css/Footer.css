@@ -53,3 +53,27 @@
     padding-top:15px;
     font-size:14px;
 }
+
+/* Mobile only */
+@media (max-width:480px){
+
+  .footer-container{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+
+  .footer-section{
+    width:100%;
+    margin-bottom:25px;
+  }
+
+  .footer-logo{
+    justify-content:center;
+  }
+
+  .social-icons{
+    justify-content:center;
+  }
+
+}

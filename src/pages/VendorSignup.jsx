@@ -73,7 +73,7 @@ const VendorSignup = () => {
 
     }catch(err){
 
-      setMessage("Failed to submit request");
+      setMessage("Failed to submit request",err);
 
     }finally{
 

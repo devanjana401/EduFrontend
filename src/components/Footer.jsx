@@ -2,6 +2,7 @@ import React from "react";
 import { IoBookSharp } from "react-icons/io5";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import "../css/Footer.css";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -38,15 +39,15 @@ const Footer = () => {
         </div>
 
         <div className="footer-section logo-section">
-          <div className="footer-logo">
-            <IoBookSharp size={30}/>
+          <Link to="/" className="footer-logo">
+            <IoBookSharp size={30} />
             <h2>EduConnect</h2>
-          </div>
+          </Link>
 
           <div className="social-icons">
-            <FaFacebook/>
-            <FaTwitter/>
-            <FaInstagram/>
+            <FaFacebook />
+            <FaTwitter />
+            <FaInstagram />
           </div>
         </div>
 

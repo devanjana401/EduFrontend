@@ -97,7 +97,7 @@ const Login = () => {
 
         </form>
 
-        {/* Signup Link */}
+        {/* signup link */}
         <p className="auth-link">
           Don't have an account?{" "}
           <span className="signup-link" onClick={()=>navigate("/signup")}>
