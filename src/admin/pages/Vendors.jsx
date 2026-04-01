@@ -8,39 +8,50 @@ const Vendors = () => {
 
   useEffect(() => {
 
-    API.get("vendors/")
-      .then(res => setVendors(res.data));
+    API.get("adminside/vendors/")
+      .then(res => setVendors(res.data))
+      .catch(err => console.log(err));
 
   }, []);
 
   return (
     <AdminLayout>
 
-      <h2>Vendors</h2>
+      <div className="p-6">
 
-      <table border="1" width="100%">
+        <h2 className="text-2xl font-bold mb-4">Vendors</h2>
 
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-          </tr>
-        </thead>
+        <table className="min-w-full border">
 
-        <tbody>
-
-          {vendors.map(v => (
-            <tr key={v.id}>
-              <td>{v.id}</td>
-              <td>{v.name}</td>
-              <td>{v.email}</td>
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="p-2 border">ID</th>
+              <th className="p-2 border">Name</th>
+              <th className="p-2 border">Email</th>
+              <th className="p-2 border">Phone</th>
+              <th className="p-2 border">Specialization</th>
             </tr>
-          ))}
+          </thead>
 
-        </tbody>
+          <tbody>
 
-      </table>
+            {vendors.map(v => (
+              <tr key={v.id} className="text-center">
+
+                <td className="p-2 border">{v.id}</td>
+                <td className="p-2 border">{v.full_name}</td>
+                <td className="p-2 border">{v.user?.email}</td>
+                <td className="p-2 border">{v.phone}</td>
+                <td className="p-2 border">{v.specialization}</td>
+
+              </tr>
+            ))}
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </AdminLayout>
   );

@@ -5,62 +5,40 @@ import "../css/Auth.css";
 
 const Login = () => {
 
-  const [email,setEmail] = useState("");
-  const [password,setPassword] = useState("");
-  const [error,setError] = useState("");
-  const [loading,setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleLogin = async (e)=>{
+  const handleLogin = async (e) => {
     e.preventDefault();
-
     setLoading(true);
     setError("");
 
-    try{
+    try {
 
-      const res = await API.post("login/",{
-        email:email,
-        password:password
-      });
+      const res = await API.post("account/login/", { email, password });
 
-      const token = res.data.access;
-      const role = res.data.role;
-      const emailData = res.data.email;
+      const { access, role, email: userEmail } = res.data;
 
-      // store login data
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", access);
       localStorage.setItem("role", role);
-      localStorage.setItem("email", emailData);
+      localStorage.setItem("email", userEmail);
 
-      alert("Login successful");
+      if (role === 1) navigate("/admin");
+      else if (role === 2) navigate("/vendor/dashboard");
+      else navigate("/");
 
-      // role based redirect
-      if(role === 1){
-        navigate("/admin/dashboard");
-      }
-      else if(role === 2){
-        navigate("/vendor/dashboard");
-      }
-      else{
-        navigate("/");
-      }
-
-      // reload so navbar updates
-      window.location.reload();
-
-    }catch(err){
-
+    } catch (err) {
       setError(err.response?.data?.error || "Invalid credentials");
-
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
 
   return (
-
     <div className="auth-container">
 
       <div className="auth-box">
@@ -97,18 +75,19 @@ const Login = () => {
 
         </form>
 
-        {/* signup link */}
         <p className="auth-link">
           Don't have an account?{" "}
-          <span className="signup-link" onClick={()=>navigate("/signup")}>
-            Sign up
-          </span>
+          <span onClick={()=>navigate("/signup")}>Sign up</span>
+        </p>
+
+        <p className="auth-link">
+          Forgot password?{" "}
+          <span onClick={()=>navigate("/reset-password")}>Reset here</span>
         </p>
 
       </div>
 
     </div>
-
   );
 };
 

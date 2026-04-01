@@ -15,6 +15,7 @@ import Users from './admin/pages/Users'
 import Vendors from './admin/pages/Vendors'
 import VendorRequests from './admin/pages/VendorRequest'
 import ScreenButton from './components/ScreenButton'
+import ResetPassword from './pages/ResetPassword'
 
 function App() {
 
@@ -27,13 +28,13 @@ function App() {
         {/* public routes */}
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/vendor-signup" element={<VendorSignup />} />
-        <Route path="/become-teacher" element={<VendorSignup />} />
 
         {/* admin routes */}
         <Route
-          path="/admin/dashboard"
+          path="/admin"
           element={
             <ProtectedRoute allowedRole={1}>
               <Dashboard />

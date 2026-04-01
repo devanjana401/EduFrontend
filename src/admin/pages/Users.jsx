@@ -7,41 +7,111 @@ const Users = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    fetchUsers();
+  }, []);
 
-    API.get("users/")
+  const fetchUsers = () => {
+    API.get("adminside/users/")
       .then(res => setUsers(res.data))
       .catch(err => console.log(err));
+  };
 
-  }, []);
+  const blockUser = (id) => {
+    API.post(`adminside/block-user/${id}/`)
+      .then(() => {
+
+        setUsers(users.map(user =>
+          user.id === id ? { ...user, is_active: false } : user
+        ));
+
+      })
+      .catch(err => console.log(err));
+  };
+
+  const unblockUser = (id) => {
+    API.post(`adminside/unblock-user/${id}/`)
+      .then(() => {
+
+        setUsers(users.map(user =>
+          user.id === id ? { ...user, is_active: true } : user
+        ));
+
+      })
+      .catch(err => console.log(err));
+  };
 
   return (
     <AdminLayout>
 
-      <h2>Users</h2>
+      <div className="p-6">
 
-      <table border="1" width="100%">
+        <h2 className="text-2xl font-bold mb-4">Users</h2>
 
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Email</th>
-            <th>Role</th>
-          </tr>
-        </thead>
+        <table className="min-w-full border">
 
-        <tbody>
-
-          {users.map(user => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.email}</td>
-              <td>{user.role}</td>
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="p-2 border">ID</th>
+              <th className="p-2 border">Email</th>
+              <th className="p-2 border">Role</th>
+              <th className="p-2 border">Status</th>
+              <th className="p-2 border">Action</th>
             </tr>
-          ))}
+          </thead>
 
-        </tbody>
+          <tbody>
 
-      </table>
+            {users.map((user) => (
+              <tr key={user.id} className="text-center">
+
+                <td className="p-2 border">{user.id}</td>
+
+                <td className="p-2 border">{user.email}</td>
+
+                <td className="p-2 border">
+                  {user.role === 1
+                    ? "Admin"
+                    : user.role === 2
+                    ? "Vendor"
+                    : "User"}
+                </td>
+
+                <td className="p-2 border">
+                  {user.is_active ? (
+                    <span className="text-green-600 font-semibold">Active</span>
+                  ) : (
+                    <span className="text-red-600 font-semibold">Blocked</span>
+                  )}
+                </td>
+
+                <td className="p-2 border">
+
+                  {user.is_active ? (
+                    <button
+                      onClick={() => blockUser(user.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                    >
+                      Block
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => unblockUser(user.id)}
+                      className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
+                    >
+                      Unblock
+                    </button>
+                  )}
+
+                </td>
+
+              </tr>
+            ))}
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </AdminLayout>
   );

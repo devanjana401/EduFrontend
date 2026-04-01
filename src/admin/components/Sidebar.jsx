@@ -12,12 +12,11 @@ const Sidebar = () => {
         padding: "20px"
       }}
     >
-      <h3>Admin</h3>
 
       <ul style={{ listStyle: "none", padding: 0 }}>
 
-        <li>
-          <Link to="/admin/dashboard" style={{ color: "white" }}>
+       <li>
+          <Link to="/admin" style={{ color: "white" }}>
             Dashboard
           </Link>
         </li>

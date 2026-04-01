@@ -1,6 +1,5 @@
 import React from "react";
 import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar";
 
 const AdminLayout = ({ children }) => {
   return (
@@ -9,7 +8,7 @@ const AdminLayout = ({ children }) => {
       <Sidebar />
 
       <div style={{ flex: 1 }}>
-        <Navbar />
+        
 
         <div style={{ padding: "20px" }}>
           {children}

@@ -26,15 +26,8 @@ const VendorSignup = () => {
   };
 
   const handleFileChange = (e,type)=>{
-
-    if(type==="certificate"){
-      setCertificate(e.target.files[0]);
-    }
-
-    if(type==="id_proof"){
-      setIdProof(e.target.files[0]);
-    }
-
+    if(type==="certificate") setCertificate(e.target.files[0]);
+    if(type==="id_proof") setIdProof(e.target.files[0]);
   };
 
   const handleSubmit = async(e)=>{
@@ -49,20 +42,13 @@ const VendorSignup = () => {
       data.append(key,formData[key]);
     });
 
-    if(certificate){
-      data.append("certificate",certificate);
-    }
-
-    if(idProof){
-      data.append("id_proof",idProof);
-    }
+    if(certificate) data.append("certificate",certificate);
+    if(idProof) data.append("id_proof",idProof);
 
     try{
 
-      await API.post("vendor-request/",data,{
-        headers:{
-          "Content-Type":"multipart/form-data"
-        }
+      await API.post("account/vendor-request/",data,{
+        headers:{ "Content-Type":"multipart/form-data" }
       });
 
       setMessage("Request submitted successfully");
@@ -73,7 +59,8 @@ const VendorSignup = () => {
 
     }catch(err){
 
-      setMessage("Failed to submit request",err);
+      setMessage("Failed to submit request");
+      console.log(err);
 
     }finally{
 

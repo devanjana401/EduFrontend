@@ -22,9 +22,9 @@ const Signup = () => {
 
     try{
 
-      await API.post("signup/",{
-        email:email,
-        password:password,
+      await API.post("account/signup/",{
+        email,
+        password,
         role:3
       });
 
@@ -81,9 +81,7 @@ const Signup = () => {
             />
           </div>
 
-          <button type="submit">
-            Sign Up
-          </button>
+          <button type="submit">Sign Up</button>
 
         </form>
 
