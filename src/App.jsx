@@ -16,6 +16,8 @@ import Vendors from './admin/pages/Vendors'
 import VendorRequests from './admin/pages/VendorRequest'
 import ScreenButton from './components/ScreenButton'
 import ResetPassword from './pages/ResetPassword'
+import About from './pages/About'
+import Contact from './pages/Contact'
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
 
         {/* public routes */}
         <Route path='/' element={<Home/>}/>
+        <Route path='/about' element={<About/>}/>
+        <Route path='/contact' element={<Contact/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/signup" element={<Signup />} />
