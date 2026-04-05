@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import AdminLayout from "../AdminLayout";
-import API from "../../services/api";
+import AdminLayout from "../../AdminLayout";
+import API from "../../../services/api";
+import { useNavigate } from "react-router-dom";
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
 const Users = () => {
 
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUsers();
@@ -38,6 +41,21 @@ const Users = () => {
 
       })
       .catch(err => console.log(err));
+  };
+
+  const deleteUser = (id) => {
+
+    if (window.confirm("Delete this user?")) {
+
+      API.delete(`adminside/profile-delete/user/${id}/`)
+        .then(() => {
+          alert("User deleted");
+          fetchUsers();
+        })
+        .catch(err => console.log(err));
+
+    }
+
   };
 
   return (
@@ -86,21 +104,44 @@ const Users = () => {
 
                 <td className="p-2 border">
 
-                  {user.is_active ? (
-                    <button
-                      onClick={() => blockUser(user.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-                    >
-                      Block
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => unblockUser(user.id)}
-                      className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
-                    >
-                      Unblock
-                    </button>
-                  )}
+                  <div className="flex justify-center gap-3">
+
+                    {/* VIEW */}
+                    <FaEye
+                      style={{ cursor: "pointer" }}
+                      onClick={() => navigate(`/admin/profile-view/user/${user.id}`)}
+                    />
+
+                    {/* EDIT */}
+                    <FaEdit
+                      style={{ cursor: "pointer" }}
+                      onClick={() => navigate(`/admin/profile-edit/user/${user.id}`)}
+                    />
+
+                    {/* DELETE */}
+                    <FaTrash
+                      style={{ cursor: "pointer", color: "red" }}
+                      onClick={() => deleteUser(user.id)}
+                    />
+
+                    {/* BLOCK / UNBLOCK */}
+                    {user.is_active ? (
+                      <button
+                        onClick={() => blockUser(user.id)}
+                        className="bg-red-500 hover:bg-red-600 text-white px-1 py-0.5 rounded text-xs"
+                      >
+                        Block
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => unblockUser(user.id)}
+                        className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-sm"
+                      >
+                        Unblock
+                      </button>
+                    )}
+
+                  </div>
 
                 </td>
 
