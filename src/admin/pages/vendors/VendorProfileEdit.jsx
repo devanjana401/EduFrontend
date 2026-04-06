@@ -4,7 +4,6 @@ import AdminLayout from "../../AdminLayout";
 import API from "../../../services/api";
 
 const VendorProfileEdit = () => {
-
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -17,8 +16,8 @@ const VendorProfileEdit = () => {
   });
 
   useEffect(() => {
-    API.get(`adminside/profile/vendor/${id}/`)
-      .then(res => {
+    API.get(`adminside/vendor/${id}/`)
+      .then((res) => {
         setVendor({
           full_name: res.data.full_name || "",
           phone: res.data.phone || "",
@@ -27,37 +26,30 @@ const VendorProfileEdit = () => {
           bio: res.data.bio || ""
         });
       })
-      .catch(err => console.log("Fetch error:", err));
+      .catch((err) => console.log(err));
   }, [id]);
 
   const handleChange = (e) => {
-    setVendor({
-      ...vendor,
-      [e.target.name]: e.target.value
-    });
+    setVendor({ ...vendor, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    API.put(`adminside/profile-update/vendor/${id}/`, vendor)
-      .then(res => {
+    API.put(`adminside/vendor-update/${id}/`, vendor)
+      .then(() => {
         alert("Vendor updated successfully");
         navigate("/admin/vendors");
       })
-      .catch(err => {
-        console.log("Update error:", err.response?.data);
-      });
+      .catch((err) => console.log(err.response?.data));
   };
 
   return (
     <AdminLayout>
-
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-4">Edit Vendor</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <input
             type="text"
             name="full_name"
@@ -102,16 +94,11 @@ const VendorProfileEdit = () => {
             className="border p-2 w-full"
           />
 
-          <button
-            type="submit"
-            className="bg-black text-white px-4 py-2"
-          >
+          <button type="submit" className="bg-black text-white px-4 py-2">
             Update Vendor
           </button>
-
         </form>
       </div>
-
     </AdminLayout>
   );
 };

@@ -13,7 +13,7 @@ import Home from './pages/Home'
 import Dashboard from './admin/pages/Dashboard'
 import Users from './admin/pages/users/Users'
 import Vendors from './admin/pages/vendors/Vendors'
-import VendorRequests from './admin/pages/vendors/VendorRequest'
+import VendorRequests from './admin/pages/vendorRequest/VendorRequest'
 import ScreenButton from './components/ScreenButton'
 import ResetPassword from './pages/ResetPassword'
 import About from './pages/About'
@@ -23,6 +23,9 @@ import VendorProfileView from './admin/pages/vendors/VendorProfileView'
 import VendorProfileEdit from './admin/pages/vendors/VendorProfileEdit'
 import UserProfileEdit from './admin/pages/users/UserProfileEdit'
 import UserProfileView from './admin/pages/users/UserProfileView'
+import VendorRequest from './admin/pages/vendorRequest/VendorRequest'
+import VendorRequestView from './admin/pages/vendorRequest/VendorRequestView'
+import VendorRequestEdit from './admin/pages/vendorRequest/VendorRequestEdit'
 
 function App() {
 
@@ -76,15 +79,21 @@ function App() {
           }
         />
 
-        {/* View vendor */}
-        {/* <Route path="/admin/profile-view/user/:id" element={<UserProfileView />} /> */}
-        {/* edit vendor */}
-        {/* <Route path="/admin/profile-edit/user/:id" element={<UserProfileEdit />} /> */}
-      
-        {/* View vendor */}
-        <Route path="/admin/profile-view/vendor/:id" element={<VendorProfileView />} />
-        {/* edit vendor */}
-        <Route path="/admin/profile-edit/vendor/:id" element={<VendorProfileEdit />} />
+        {/* Users actions*/}
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/user/:id" element={<UserProfileView />} />
+        <Route path="/admin/user-update/:id" element={<UserProfileEdit />} />
+
+
+        {/* vendors actions*/}
+        <Route path="/admin/vendors" element={<Vendors />} />
+        <Route path="/admin/vendor/:id" element={<VendorProfileView />} />
+        <Route path="/admin/vendor-update/:id" element={<VendorProfileEdit />} />
+
+        {/* vendor request actions*/}
+        <Route path="/admin/vendor-requests" element={<VendorRequest />} />
+        <Route path="/admin/vendor-request-view/:id" element={<VendorRequestView />} />
+        <Route path="/admin/vendor-request-update/:id" element={<VendorRequestEdit />} />
 
 
         {/* vendor routes */}

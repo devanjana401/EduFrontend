@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
 const Vendors = () => {
-
   const [vendors, setVendors] = useState([]);
   const navigate = useNavigate();
 
@@ -15,32 +14,26 @@ const Vendors = () => {
 
   const fetchVendors = () => {
     API.get("adminside/vendors/")
-      .then(res => setVendors(res.data))
-      .catch(err => console.log(err));
+      .then((res) => setVendors(res.data))
+      .catch((err) => console.log(err));
   };
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure to delete this vendor?")) {
-
-      API.delete(`adminside/profile-delete/vendor/${id}/`)
+      API.delete(`adminside/vendor-delete/${id}/`)
         .then(() => {
-          alert("Vendor deleted");
+          alert("Vendor deleted successfully");
           fetchVendors();
         })
-        .catch(err => console.log(err));
-
+        .catch((err) => console.log(err));
     }
   };
 
   return (
     <AdminLayout>
-
       <div className="p-6">
-
         <h2 className="text-2xl font-bold mb-4">Vendors</h2>
-
         <table className="min-w-full border">
-
           <thead className="bg-gray-200">
             <tr>
               <th className="p-2 border">ID</th>
@@ -51,48 +44,26 @@ const Vendors = () => {
               <th className="p-2 border">Action</th>
             </tr>
           </thead>
-
           <tbody>
-
             {vendors.map((v) => (
               <tr key={v.id} className="text-center">
-
                 <td className="p-2 border">{v.id}</td>
                 <td className="p-2 border">{v.full_name}</td>
                 <td className="p-2 border">{v.email}</td>
                 <td className="p-2 border">{v.phone}</td>
                 <td className="p-2 border">{v.specialization}</td>
-
                 <td className="p-2 border">
                   <div className="flex justify-center gap-3">
-
-                    <FaEye
-                      style={{ cursor: "pointer" }}
-                      onClick={() => navigate(`/admin/profile-view/vendor/${v.id}`)}
-                    />
-
-                    <FaEdit
-                      style={{ cursor: "pointer" }}
-                      onClick={() => navigate(`/admin/profile-edit/vendor/${v.id}`)}
-                    />
-
-                    <FaTrash
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleDelete(v.id)}
-                    />
-
+                    <FaEye style={{ cursor: "pointer" }} onClick={() => navigate(`/admin/vendor/${v.id}`)} />
+                    <FaEdit style={{ cursor: "pointer" }} onClick={() => navigate(`/admin/vendor-update/${v.id}`)} />
+                    <FaTrash style={{ cursor: "pointer" }} onClick={() => handleDelete(v.id)} />
                   </div>
                 </td>
-
               </tr>
             ))}
-
           </tbody>
-
         </table>
-
       </div>
-
     </AdminLayout>
   );
 };
