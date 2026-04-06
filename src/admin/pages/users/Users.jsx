@@ -42,16 +42,6 @@ const Users = () => {
       .catch((err) => console.log(err));
   };
 
-  const deleteUser = (id) => {
-    if (window.confirm("Delete this user?")) {
-      API.delete(`adminside/user-delete/${id}/`)
-        .then(() => {
-          alert("User deleted successfully");
-          fetchUsers();
-        })
-        .catch((err) => console.log(err));
-    }
-  };
 
   return (
     <AdminLayout>
@@ -89,18 +79,6 @@ const Users = () => {
                 </td>
                 <td className="p-2 border">
                   <div className="flex justify-center gap-2">
-                    <FaEye
-                      style={{ cursor: "pointer" }}
-                      onClick={() => navigate(`/admin/user/${user.id}`)}
-                    />
-                    <FaEdit
-                      style={{ cursor: "pointer" }}
-                      onClick={() => navigate(`/admin/user-update/${user.id}`)}
-                    />
-                    <FaTrash
-                      style={{ cursor: "pointer", color: "red" }}
-                      onClick={() => deleteUser(user.id)}
-                    />
                     {user.is_active ? (
                       <button
                         onClick={() => blockUser(user.id)}

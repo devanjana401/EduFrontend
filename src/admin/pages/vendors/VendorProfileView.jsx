@@ -13,33 +13,69 @@ const VendorProfileView = () => {
       .catch((err) => console.log(err));
   }, [id]);
 
-  if (!vendor) return <p>Loading...</p>;
+  if (!vendor)
+    return (
+      <AdminLayout>
+        <div className="p-10 text-center text-lg font-semibold">Loading...</div>
+      </AdminLayout>
+    );
 
   return (
     <AdminLayout>
-      <div className="p-6">
-        <h2 className="text-2xl font-bold mb-4">Vendor Profile</h2>
+      <div className="p-8 flex justify-center">
 
-        <div className="border p-4 rounded space-y-2">
-          <p>
-            <strong>Name:</strong> {vendor.full_name}
-          </p>
-          <p>
-            <strong>Email:</strong> {vendor.email}
-          </p>
-          <p>
-            <strong>Phone:</strong> {vendor.phone}
-          </p>
-          <p>
-            <strong>Specialization:</strong> {vendor.specialization}
-          </p>
-          <p>
-            <strong>Experience:</strong> {vendor.experience_years}
-          </p>
-          <p>
-            <strong>Bio:</strong> {vendor.bio}
-          </p>
+        <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-3xl">
+
+          <h2 className="text-3xl font-bold mb-6 text-gray-800">
+            Vendor Profile
+          </h2>
+
+          <div className="grid grid-cols-2 gap-5 text-gray-700">
+
+            <p><strong>Name:</strong> {vendor.full_name}</p>
+            <p><strong>Email:</strong> {vendor.email}</p>
+
+            <p><strong>Phone:</strong> {vendor.phone}</p>
+            <p><strong>Experience:</strong> {vendor.experience_years} Years</p>
+
+            <p><strong>Specialization:</strong> {vendor.specialization}</p>
+
+            <p className="col-span-2">
+              <strong>Bio:</strong> {vendor.bio}
+            </p>
+
+            {vendor.certificate_url && (
+              <p>
+                <strong>Certificate:</strong>{" "}
+                <a
+                  href={vendor.certificate_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  View Certificate
+                </a>
+              </p>
+            )}
+
+            {vendor.id_proof_url && (
+              <p>
+                <strong>ID Proof:</strong>{" "}
+                <a
+                  href={vendor.id_proof_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  View ID Proof
+                </a>
+              </p>
+            )}
+
+          </div>
+
         </div>
+
       </div>
     </AdminLayout>
   );

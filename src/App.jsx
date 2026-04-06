@@ -21,8 +21,6 @@ import Contact from './pages/Contact'
 import VendorDashboard from './vendor/pages/VendorDashboard'
 import VendorProfileView from './admin/pages/vendors/VendorProfileView'
 import VendorProfileEdit from './admin/pages/vendors/VendorProfileEdit'
-import UserProfileEdit from './admin/pages/users/UserProfileEdit'
-import UserProfileView from './admin/pages/users/UserProfileView'
 import VendorRequest from './admin/pages/vendorRequest/VendorRequest'
 import VendorRequestView from './admin/pages/vendorRequest/VendorRequestView'
 import VendorRequestEdit from './admin/pages/vendorRequest/VendorRequestEdit'
@@ -81,8 +79,6 @@ function App() {
 
         {/* Users actions*/}
         <Route path="/admin/users" element={<Users />} />
-        <Route path="/admin/user/:id" element={<UserProfileView />} />
-        <Route path="/admin/user-update/:id" element={<UserProfileEdit />} />
 
 
         {/* vendors actions*/}

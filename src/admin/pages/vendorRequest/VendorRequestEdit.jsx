@@ -35,6 +35,7 @@ const VendorRequestEdit = () => {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
     setRequest({
       ...request,
       [name]: files ? files[0] : name === "experience_years" ? Number(value) : value,
@@ -43,7 +44,9 @@ const VendorRequestEdit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const formData = new FormData();
+
     Object.entries(request).forEach(([key, value]) => {
       if (value) formData.append(key, value);
     });
@@ -61,48 +64,153 @@ const VendorRequestEdit = () => {
       });
   };
 
-  if (loading) return <AdminLayout><div className="p-6">Loading...</div></AdminLayout>;
+  if (loading)
+    return (
+      <AdminLayout>
+        <div className="p-10 text-center text-lg font-semibold">Loading...</div>
+      </AdminLayout>
+    );
 
   return (
     <AdminLayout>
-      <div className="p-6">
-        <h2 className="text-2xl font-bold mb-4">Edit Vendor Request</h2>
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow w-96 space-y-3">
-          <input type="text" name="full_name" value={request.full_name} onChange={handleChange} placeholder="Full Name" className="border p-2 w-full" required />
-          <input type="email" name="email" value={request.email} onChange={handleChange} placeholder="Email" className="border p-2 w-full" required />
-          <input type="text" name="phone" value={request.phone} onChange={handleChange} placeholder="Phone" className="border p-2 w-full" required />
-          <input type="text" name="specialization" value={request.specialization} onChange={handleChange} placeholder="Specialization" className="border p-2 w-full" required />
-          <input type="number" name="experience_years" value={request.experience_years} onChange={handleChange} placeholder="Experience Years" className="border p-2 w-full" min={0} required />
-          <textarea name="bio" value={request.bio} onChange={handleChange} placeholder="Bio" className="border p-2 w-full" rows={3} />
+      <div className="p-8 flex justify-center">
+        <div className="w-full max-w-3xl bg-white shadow-lg rounded-xl p-8">
 
-          <div>
-            <label className="block mb-1">Certificate</label>
-            {request.certificate ? (
-              <span>{request.certificate.name}</span>
-            ) : request.certificate_url ? (
-              <a href={request.certificate_url} target="_blank" rel="noreferrer" className="text-blue-600 underline text-sm">View uploaded certificate</a>
-            ) : null}
-            <input type="file" name="certificate" onChange={handleChange} className="border p-2 w-full mt-1" />
-          </div>
+          <h2 className="text-3xl font-bold mb-6 text-gray-800">
+            Edit Vendor Request
+          </h2>
 
-          <div>
-            <label className="block mb-1">ID Proof</label>
-            {request.id_proof ? (
-              <span>{request.id_proof.name}</span>
-            ) : request.id_proof_url ? (
-              <a href={request.id_proof_url} target="_blank" rel="noreferrer" className="text-blue-600 underline text-sm">View uploaded ID proof</a>
-            ) : null}
-            <input type="file" name="id_proof" onChange={handleChange} className="border p-2 w-full mt-1" />
-          </div>
+          <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-5">
 
-          <select name="status" value={request.status} onChange={handleChange} className="border p-2 w-full" required>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
-          </select>
+            <input
+              type="text"
+              name="full_name"
+              value={request.full_name}
+              onChange={handleChange}
+              placeholder="Full Name"
+              className="border rounded-lg p-3 focus:ring-2 focus:ring-blue-400"
+              required
+            />
 
-          <button type="submit" className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Update Vendor Request</button>
-        </form>
+            <input
+              type="email"
+              name="email"
+              value={request.email}
+              onChange={handleChange}
+              placeholder="Email"
+              className="border rounded-lg p-3 focus:ring-2 focus:ring-blue-400"
+              required
+            />
+
+            <input
+              type="text"
+              name="phone"
+              value={request.phone}
+              onChange={handleChange}
+              placeholder="Phone"
+              className="border rounded-lg p-3 focus:ring-2 focus:ring-blue-400"
+              required
+            />
+
+            <input
+              type="text"
+              name="specialization"
+              value={request.specialization}
+              onChange={handleChange}
+              placeholder="Specialization"
+              className="border rounded-lg p-3 focus:ring-2 focus:ring-blue-400"
+              required
+            />
+
+            <input
+              type="number"
+              name="experience_years"
+              value={request.experience_years}
+              onChange={handleChange}
+              placeholder="Experience Years"
+              className="border rounded-lg p-3 focus:ring-2 focus:ring-blue-400"
+              min={0}
+              required
+            />
+
+            <select
+              name="status"
+              value={request.status}
+              onChange={handleChange}
+              className="border rounded-lg p-3 focus:ring-2 focus:ring-blue-400"
+            >
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+
+            <textarea
+              name="bio"
+              value={request.bio}
+              onChange={handleChange}
+              placeholder="Bio"
+              rows={3}
+              className="border rounded-lg p-3 col-span-2 focus:ring-2 focus:ring-blue-400"
+            />
+
+            {/* Certificate */}
+            <div className="col-span-2">
+              <label className="font-medium text-gray-700">Certificate</label>
+
+              {request.certificate_url && (
+                <div className="mb-2">
+                  <a
+                    href={request.certificate_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-600 underline text-sm"
+                  >
+                    View Uploaded Certificate
+                  </a>
+                </div>
+              )}
+
+              <input
+                type="file"
+                name="certificate"
+                onChange={handleChange}
+                className="border rounded-lg p-3 w-full"
+              />
+            </div>
+
+            {/* ID Proof */}
+            <div className="col-span-2">
+              <label className="font-medium text-gray-700">ID Proof</label>
+
+              {request.id_proof_url && (
+                <div className="mb-2">
+                  <a
+                    href={request.id_proof_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-600 underline text-sm"
+                  >
+                    View Uploaded ID Proof
+                  </a>
+                </div>
+              )}
+
+              <input
+                type="file"
+                name="id_proof"
+                onChange={handleChange}
+                className="border rounded-lg p-3 w-full"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="col-span-2 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition"
+            >
+              Update Vendor Request
+            </button>
+          </form>
+        </div>
       </div>
     </AdminLayout>
   );
