@@ -10,7 +10,7 @@ const VendorVideos = () => {
 
     const fetchVideos = async () => {
 
-      const res = await API.get("/vendor/videos/");
+      const res = await API.get("/vendorside/vendor-videos/");
 
       setVideos(res.data);
 
