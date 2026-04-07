@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AdminLayout from "../AdminLayout";
+import AdminLayout from "../components/AdminLayout";
 
 const Dashboard = () => {
 

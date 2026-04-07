@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import AdminLayout from "../../AdminLayout";
+import AdminLayout from "../../components/AdminLayout";
 import API from "../../../services/api";
 
 const VendorRequestEdit = () => {

@@ -2,43 +2,28 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+  const links = [
+    { name: "Dashboard", path: "/admin" },
+    { name: "Users", path: "/admin/users" },
+    { name: "Vendors", path: "/admin/vendors" },
+    { name: "Vendor Requests", path: "/admin/vendor-requests" },
+    { name: "Categories", path: "/admin/categories" },
+    { name: "Course Approval", path: "/admin/courses" }, // optional
+  ];
+
   return (
-    <div
-      style={{
-        width: "220px",
-        height: "100vh",
-        background: "#1f2937",
-        color: "white",
-        padding: "20px"
-      }}
-    >
-
-      <ul style={{ listStyle: "none", padding: 0 }}>
-
-       <li>
-          <Link to="/admin" style={{ color: "white" }}>
-            Dashboard
-          </Link>
-        </li>
-
-        <li>
-          <Link to="/admin/users" style={{ color: "white" }}>
-            Users
-          </Link>
-        </li>
-
-        <li>
-          <Link to="/admin/vendors" style={{ color: "white" }}>
-            Vendors
-          </Link>
-        </li>
-
-        <li>
-          <Link to="/admin/vendor-requests" style={{ color: "white" }}>
-            Vendor Requests
-          </Link>
-        </li>
-
+    <div className="w-56 h-screen bg-gray-800 text-white p-5">
+      <ul className="space-y-4">
+        {links.map((link) => (
+          <li key={link.path}>
+            <Link
+              to={link.path}
+              className="block text-white hover:text-blue-400 transition-colors"
+            >
+              {link.name}
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );

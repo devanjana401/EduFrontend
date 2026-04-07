@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AdminLayout from "../../AdminLayout";
+import AdminLayout from "../../components/AdminLayout";
 import API from "../../../services/api";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";

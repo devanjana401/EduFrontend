@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import VendorLayout from "../VendorLayout";
+import VendorLayout from "../components/VendorLayout";
 import { Link } from "react-router-dom";
 
 const VendorDashboard = () => {

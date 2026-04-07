@@ -28,7 +28,7 @@ const Login = () => {
       localStorage.setItem("email", userEmail);
 
       if (role === 1) navigate("/admin");
-      else if (role === 2) navigate("/vendor/dashboard");
+      else if (role === 2) navigate("/vendor");
       else navigate("/");
 
     } catch (err) {

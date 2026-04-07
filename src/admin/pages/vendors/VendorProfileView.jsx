@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import AdminLayout from "../../AdminLayout";
+import AdminLayout from "../../components/AdminLayout";
 import API from "../../../services/api";
 
 const VendorProfileView = () => {

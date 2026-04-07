@@ -1,81 +1,113 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaHome, FaVideo, FaBook, FaUserGraduate, FaChartBar, FaUser } from "react-icons/fa";
 
 const VendorSidebar = () => {
   return (
-    <div
-      style={{
-        width: "220px",
-        height: "100vh",
-        background: "#111827",
-        color: "white",
-        padding: "20px",
-        display: "flex",
-        flexDirection: "column"
-      }}
-    >
 
-      <h2 style={{ marginBottom: "25px", fontWeight: "bold" }}>
+    <div className="w-56 h-screen bg-gray-900 text-white p-5 flex flex-col">
+
+      <h2 className="text-xl font-bold mb-6">
         Vendor Panel
       </h2>
 
-      <ul style={{ listStyle: "none", padding: 0, lineHeight: "40px" }}>
+      <ul className="space-y-3">
 
         <li>
-          <Link to="/vendor" style={{ color: "white", textDecoration: "none" }}>
+          <Link
+            to="/vendor"
+            className="flex items-center gap-2 hover:text-blue-400"
+          >
+            <FaHome />
             Dashboard
           </Link>
         </li>
 
         <li>
-          <Link to="/vendor/upload-video" style={{ color: "white", textDecoration: "none" }}>
+          <Link
+            to="/vendor/create-course"
+            className="flex items-center gap-2 hover:text-blue-400"
+          >
+            <FaBook />
+            Create Course
+          </Link>
+        </li>
+
+        <li>
+          <Link
+            to="/vendor/courses"
+            className="flex items-center gap-2 hover:text-blue-400"
+          >
+            <FaBook />
+            My Courses
+          </Link>
+        </li>
+
+        <li>
+          <Link
+            to="/vendor/upload-video"
+            className="flex items-center gap-2 hover:text-blue-400"
+          >
+            <FaVideo />
             Upload Video
           </Link>
         </li>
 
         <li>
-          <Link to="/vendor/videos" style={{ color: "white", textDecoration: "none" }}>
+          <Link
+            to="/vendor/videos"
+            className="flex items-center gap-2 hover:text-blue-400"
+          >
+            <FaVideo />
             My Videos
           </Link>
         </li>
 
         <li>
-          <Link to="/vendor/students" style={{ color: "white", textDecoration: "none" }}>
+          <Link
+            to="/vendor/students"
+            className="flex items-center gap-2 hover:text-blue-400"
+          >
+            <FaUserGraduate />
             Students
           </Link>
         </li>
 
         <li>
-          <Link to="/vendor/analytics" style={{ color: "white", textDecoration: "none" }}>
+          <Link
+            to="/vendor/analytics"
+            className="flex items-center gap-2 hover:text-blue-400"
+          >
+            <FaChartBar />
             Analytics
           </Link>
         </li>
 
         <li>
-          <Link to="/vendor/profile" style={{ color: "white", textDecoration: "none" }}>
+          <Link
+            to="/vendor/profile"
+            className="flex items-center gap-2 hover:text-blue-400"
+          >
+            <FaUser />
             Profile
           </Link>
         </li>
 
       </ul>
 
-      <div style={{ marginTop: "auto" }}>
+      <div className="mt-auto pt-6">
+
         <Link
           to="/"
-          style={{
-            color: "white",
-            textDecoration: "none",
-            background: "#ef4444",
-            padding: "8px 12px",
-            display: "inline-block",
-            borderRadius: "4px"
-          }}
+          className="bg-red-500 px-3 py-2 rounded text-sm block text-center"
         >
           Logout
         </Link>
+
       </div>
 
     </div>
+
   );
 };
 

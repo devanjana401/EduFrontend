@@ -1,106 +1,151 @@
-import { Route, Routes } from 'react-router-dom'
-import './App.css'
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
 
-import Footer from './components/Footer'
-import Navbar from './components/Navbar'
-import ProtectedRoute from './components/ProtectedRoute'
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ScreenButton from "./components/ScreenButton";
 
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import VendorSignup from './pages/VendorSignup'
-import Home from './pages/Home'
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import VendorSignup from "./pages/VendorSignup";
+import Home from "./pages/Home";
+import ResetPassword from "./pages/ResetPassword";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
-import Dashboard from './admin/pages/Dashboard'
-import Users from './admin/pages/users/Users'
-import Vendors from './admin/pages/vendors/Vendors'
-import VendorRequests from './admin/pages/vendorRequest/VendorRequest'
-import ScreenButton from './components/ScreenButton'
-import ResetPassword from './pages/ResetPassword'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import VendorDashboard from './vendor/pages/VendorDashboard'
-import VendorProfileView from './admin/pages/vendors/VendorProfileView'
-import VendorProfileEdit from './admin/pages/vendors/VendorProfileEdit'
-import VendorRequest from './admin/pages/vendorRequest/VendorRequest'
-import VendorRequestView from './admin/pages/vendorRequest/VendorRequestView'
-import VendorRequestEdit from './admin/pages/vendorRequest/VendorRequestEdit'
+import Dashboard from "./admin/pages/Dashboard";
+import Categories from "./admin/pages/Categories";
+import Users from "./admin/pages/users/Users";
+import Vendors from "./admin/pages/vendors/Vendors";
+import VendorRequests from "./admin/pages/vendorRequest/VendorRequest";
+import VendorProfileView from "./admin/pages/vendors/VendorProfileView";
+import VendorProfileEdit from "./admin/pages/vendors/VendorProfileEdit";
+import VendorRequestView from "./admin/pages/vendorRequest/VendorRequestView";
+import VendorRequestEdit from "./admin/pages/vendorRequest/VendorRequestEdit";
+
+import VendorDashboard from "./vendor/pages/VendorDashboard";
+import VendorCreateCourse from "./vendor/pages/vendorcourses/VendorCreateCourse";
+import VendorCourses from "./vendor/pages/vendorcourses/VendorCourses";
+import VendorUploadVideo from "./vendor/pages/vendorvideos/VendorUploadVideo";
+import VendorVideos from "./vendor/pages/vendorvideos/VendorVideos";
+import Courses from "./admin/pages/Courses";
 
 function App() {
-
   return (
     <>
-      <Navbar/>
+      <Navbar />
 
       <Routes>
 
-        {/* public routes */}
-        <Route path='/' element={<Home/>}/>
-        <Route path='/about' element={<About/>}/>
-        <Route path='/contact' element={<Contact/>}/>
-        <Route path='/login' element={<Login/>}/>
+        {/* Public routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/vendor-signup" element={<VendorSignup />} />
 
-
-        {/* admin routes */}
-        <Route
-          path="/admin"
-          element={
+        {/* Admin routes */}
+        <Route path="/admin" element={
             <ProtectedRoute allowedRole={1}>
               <Dashboard />
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/admin/users"
-          element={
+        <Route path="/admin/courses" element={
+            <ProtectedRoute allowedRole={1}>
+              <Courses />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/admin/users" element={
             <ProtectedRoute allowedRole={1}>
               <Users />
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/admin/vendors"
-          element={
+        <Route path="/admin/vendors" element={
             <ProtectedRoute allowedRole={1}>
               <Vendors />
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/admin/vendor-requests"
-          element={
+        <Route path="/admin/categories" element={
+            <ProtectedRoute allowedRole={1}>
+              <Categories />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/admin/vendor-requests" element={
             <ProtectedRoute allowedRole={1}>
               <VendorRequests />
             </ProtectedRoute>
           }
         />
-
-        {/* Users actions*/}
-        <Route path="/admin/users" element={<Users />} />
-
-
-        {/* vendors actions*/}
-        <Route path="/admin/vendors" element={<Vendors />} />
-        <Route path="/admin/vendor/:id" element={<VendorProfileView />} />
-        <Route path="/admin/vendor-update/:id" element={<VendorProfileEdit />} />
-
-        {/* vendor request actions*/}
-        <Route path="/admin/vendor-requests" element={<VendorRequest />} />
-        <Route path="/admin/vendor-request-view/:id" element={<VendorRequestView />} />
-        <Route path="/admin/vendor-request-update/:id" element={<VendorRequestEdit />} />
-
-
-        {/* vendor routes */}
-        <Route path="/vendor/dashboard" element={<VendorDashboard />} />
+        <Route path="/admin/vendor/:id" element={
+            <ProtectedRoute allowedRole={1}>
+              <VendorProfileView />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/admin/vendor-update/:id" element={
+            <ProtectedRoute allowedRole={1}>
+              <VendorProfileEdit />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/admin/vendor-request-view/:id" element={
+            <ProtectedRoute allowedRole={1}>
+              <VendorRequestView />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/admin/vendor-request-update/:id" element={
+            <ProtectedRoute allowedRole={1}>
+              <VendorRequestEdit />
+            </ProtectedRoute>
+          }
+        />
+        {/* Vendor routes */}
+        <Route path="/vendor" element={
+            <ProtectedRoute allowedRole={2}>
+              <VendorDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/vendor/create-course" element={
+            <ProtectedRoute allowedRole={2}>
+              <VendorCreateCourse />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/vendor/courses" element={
+            <ProtectedRoute allowedRole={2}>
+              <VendorCourses />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/vendor/upload-video" element={
+            <ProtectedRoute allowedRole={2}>
+              <VendorUploadVideo />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/vendor/videos" element={
+            <ProtectedRoute allowedRole={2}>
+              <VendorVideos />
+            </ProtectedRoute>
+          }
+        />
 
       </Routes>
 
-      <Footer/>
-      <ScreenButton/>
+      <Footer />
+      <ScreenButton />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
