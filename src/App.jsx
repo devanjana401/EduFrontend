@@ -23,13 +23,13 @@ import VendorProfileView from "./admin/pages/vendors/VendorProfileView";
 import VendorProfileEdit from "./admin/pages/vendors/VendorProfileEdit";
 import VendorRequestView from "./admin/pages/vendorRequest/VendorRequestView";
 import VendorRequestEdit from "./admin/pages/vendorRequest/VendorRequestEdit";
+import Courses from "./admin/pages/Courses";
 
 import VendorDashboard from "./vendor/pages/VendorDashboard";
 import VendorCreateCourse from "./vendor/pages/vendorcourses/VendorCreateCourse";
 import VendorCourses from "./vendor/pages/vendorcourses/VendorCourses";
 import VendorUploadVideo from "./vendor/pages/vendorvideos/VendorUploadVideo";
 import VendorVideos from "./vendor/pages/vendorvideos/VendorVideos";
-import Courses from "./admin/pages/Courses";
 
 function App() {
   return (
@@ -39,6 +39,7 @@ function App() {
       <Routes>
 
         {/* Public routes */}
+
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
@@ -48,94 +49,144 @@ function App() {
         <Route path="/vendor-signup" element={<VendorSignup />} />
 
         {/* Admin routes */}
-        <Route path="/admin" element={
+
+        <Route
+          path="/admin"
+          element={
             <ProtectedRoute allowedRole={1}>
               <Dashboard />
             </ProtectedRoute>
           }
         />
-        <Route path="/admin/courses" element={
+
+        <Route
+          path="/admin/courses"
+          element={
             <ProtectedRoute allowedRole={1}>
               <Courses />
             </ProtectedRoute>
           }
         />
-        <Route path="/admin/users" element={
+
+        <Route
+          path="/admin/users"
+          element={
             <ProtectedRoute allowedRole={1}>
               <Users />
             </ProtectedRoute>
           }
         />
-        <Route path="/admin/vendors" element={
+
+        <Route
+          path="/admin/vendors"
+          element={
             <ProtectedRoute allowedRole={1}>
               <Vendors />
             </ProtectedRoute>
           }
         />
-        <Route path="/admin/categories" element={
+
+        <Route
+          path="/admin/categories"
+          element={
             <ProtectedRoute allowedRole={1}>
               <Categories />
             </ProtectedRoute>
           }
         />
-        <Route path="/admin/vendor-requests" element={
+
+        <Route
+          path="/admin/vendor-requests"
+          element={
             <ProtectedRoute allowedRole={1}>
               <VendorRequests />
             </ProtectedRoute>
           }
         />
-        <Route path="/admin/vendor/:id" element={
+
+        <Route
+          path="/admin/vendor/:id"
+          element={
             <ProtectedRoute allowedRole={1}>
               <VendorProfileView />
             </ProtectedRoute>
           }
         />
-        <Route path="/admin/vendor-update/:id" element={
+
+        <Route
+          path="/admin/vendor-update/:id"
+          element={
             <ProtectedRoute allowedRole={1}>
               <VendorProfileEdit />
             </ProtectedRoute>
           }
         />
-        <Route path="/admin/vendor-request-view/:id" element={
+
+        <Route
+          path="/admin/vendor-request-view/:id"
+          element={
             <ProtectedRoute allowedRole={1}>
               <VendorRequestView />
             </ProtectedRoute>
           }
         />
-        <Route path="/admin/vendor-request-update/:id" element={
+
+        <Route
+          path="/admin/vendor-request-update/:id"
+          element={
             <ProtectedRoute allowedRole={1}>
               <VendorRequestEdit />
             </ProtectedRoute>
           }
         />
+
         {/* Vendor routes */}
-        <Route path="/vendor" element={
+
+        <Route
+          path="/vendor"
+          element={
             <ProtectedRoute allowedRole={2}>
               <VendorDashboard />
             </ProtectedRoute>
           }
         />
-        <Route path="/vendor/create-course" element={
-            <ProtectedRoute allowedRole={2}>
-              <VendorCreateCourse />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/vendor/courses" element={
+
+        <Route
+          path="/vendor/courses"
+          element={
             <ProtectedRoute allowedRole={2}>
               <VendorCourses />
             </ProtectedRoute>
           }
         />
-        <Route path="/vendor/upload-video" element={
+
+        <Route
+          path="/vendor/create-course"
+          element={
             <ProtectedRoute allowedRole={2}>
-              <VendorUploadVideo />
+              <VendorCreateCourse />
             </ProtectedRoute>
           }
         />
-        <Route path="/vendor/videos" element={
+
+        {/* Course Videos */}
+
+        <Route
+          path="/vendor/course/:id"
+          element={
             <ProtectedRoute allowedRole={2}>
               <VendorVideos />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Upload Video */}
+
+        <Route
+          path="/vendor/course/:id/upload-video"
+          element={
+            <ProtectedRoute allowedRole={2}>
+              <VendorUploadVideo />
             </ProtectedRoute>
           }
         />

@@ -1,45 +1,110 @@
 import React, { useEffect, useState } from "react";
 import VendorLayout from "../../components/VendorLayout";
 import API from "../../../services/api";
+import { useNavigate } from "react-router-dom";
 
 const VendorCourses = () => {
+
   const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
+
     const fetchCourses = async () => {
+
       try {
+
         const res = await API.get("/vendorside/vendor-courses/");
-        console.log("Vendor courses:", res.data);
         setCourses(res.data);
+
       } catch (error) {
+
         console.log(error.response?.data || error);
+
       }
+
     };
 
     fetchCourses();
+
   }, []);
 
   return (
-    <VendorLayout>
-      <div className="p-6">
-        <h2 className="text-2xl font-bold mb-6">My Courses</h2>
 
-        <div className="grid md:grid-cols-3 gap-6">
+    <VendorLayout>
+
+      <div className="p-8 bg-gray-50 min-h-screen">
+
+        <h2 className="text-3xl font-bold text-gray-800 mb-8">
+          My Courses
+        </h2>
+
+        {courses.length === 0 && (
+
+          <div className="text-center mt-20 text-gray-500 text-lg">
+            No courses created yet
+          </div>
+
+        )}
+
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+
           {courses.map(course => (
-            <div key={course.id} className="bg-white p-4 shadow rounded">
-              <img
-                src={course.coverphoto ? `http://localhost:8000${course.coverphoto}` : "/default.png"}
-                alt=""
-                className="h-40 w-full object-cover rounded"
-              />
-              <h3 className="font-bold mt-3">{course.coursename}</h3>
-              <p className="text-gray-500">₹{course.price}</p>
+
+            <div
+              key={course.id}
+              onClick={() => navigate(`/vendor/course/${course.id}`)}
+              className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer overflow-hidden group"
+            >
+
+              {/* Course Image */}
+
+              <div className="relative">
+
+                <img
+                  src={
+                    course.coverphoto
+                      ? `http://localhost:8000${course.coverphoto}`
+                      : "/default.png"
+                  }
+                  alt=""
+                  className="h-44 w-full object-cover group-hover:scale-105 transition duration-300"
+                />
+
+                {/* Price Badge */}
+
+                <div className="absolute top-3 right-3 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow">
+                  ₹{course.price}
+                </div>
+
+              </div>
+
+              {/* Course Details */}
+
+              <div className="p-4">
+
+                <h3 className="font-semibold text-lg text-gray-800 group-hover:text-blue-600 transition">
+                  {course.coursename}
+                </h3>
+
+                <p className="text-gray-500 text-sm mt-1">
+                  Click to manage videos
+                </p>
+
+              </div>
+
             </div>
+
           ))}
+
         </div>
+
       </div>
+
     </VendorLayout>
+
   );
+
 };
 
 export default VendorCourses;

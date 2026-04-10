@@ -55,7 +55,7 @@ const VendorCreateCourse = () => {
       const res = await API.post("/vendorside/create-course/", formData);
       console.log("Course created:", res.data);
       alert("Course Created Successfully!");
-      navigate("/vendor-courses"); // redirect to vendor courses page
+      navigate("/vendor"); // redirect to vendor courses page
     } catch (error) {
       console.log("Backend validation errors:", error.response?.data);
       alert("Error creating course. Check console for details.");

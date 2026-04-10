@@ -1,31 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import VendorLayout from "../../components/VendorLayout";
 import API from "../../../services/api";
+import { useParams, useNavigate } from "react-router-dom";
 
 const VendorUploadVideo = () => {
 
-  const [courses, setCourses] = useState([]);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const [video, setVideo] = useState({
     title: "",
     description: "",
-    course: "",
+    course: id,
     video: null
   });
-
-  // Fetch vendor courses
-  useEffect(() => {
-    fetchCourses();
-  }, []);
-
-  const fetchCourses = async () => {
-    try {
-      const res = await API.get("/vendorside/vendor-courses/");
-      setCourses(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleChange = (e) => {
 
@@ -35,6 +23,7 @@ const VendorUploadVideo = () => {
       ...video,
       [name]: files ? files[0] : value
     });
+
   };
 
   const handleSubmit = async (e) => {
@@ -53,9 +42,14 @@ const VendorUploadVideo = () => {
 
       alert("Video Uploaded");
 
+      navigate(`/vendor/course/${id}`);
+
     } catch (error) {
+
       console.log(error);
+
     }
+
   };
 
   return (
@@ -74,29 +68,15 @@ const VendorUploadVideo = () => {
             placeholder="Video Title"
             className="border p-3 rounded w-full"
             onChange={handleChange}
+            required
           />
-
-          {/* Course Dropdown */}
-          <select
-            name="course"
-            className="border p-3 rounded w-full"
-            onChange={handleChange}
-          >
-            <option value="">Select Course</option>
-
-            {courses.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.coursename}
-              </option>
-            ))}
-
-          </select>
 
           <textarea
             name="description"
             placeholder="Description"
             className="border p-3 rounded w-full"
             onChange={handleChange}
+            required
           />
 
           <input
@@ -104,6 +84,7 @@ const VendorUploadVideo = () => {
             name="video"
             className="border p-3 rounded w-full"
             onChange={handleChange}
+            required
           />
 
           <button className="bg-blue-600 text-white px-6 py-3 rounded">

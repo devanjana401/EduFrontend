@@ -43,7 +43,7 @@ const VendorSidebar = () => {
           </Link>
         </li>
 
-        <li>
+        {/* <li>
           <Link
             to="/vendor/upload-video"
             className="flex items-center gap-2 hover:text-blue-400"
@@ -51,9 +51,9 @@ const VendorSidebar = () => {
             <FaVideo />
             Upload Video
           </Link>
-        </li>
+        </li> */}
 
-        <li>
+        {/* <li>
           <Link
             to="/vendor/videos"
             className="flex items-center gap-2 hover:text-blue-400"
@@ -61,7 +61,7 @@ const VendorSidebar = () => {
             <FaVideo />
             My Videos
           </Link>
-        </li>
+        </li> */}
 
         <li>
           <Link
