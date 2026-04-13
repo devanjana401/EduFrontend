@@ -57,7 +57,7 @@ const VendorCourses = () => {
               className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer overflow-hidden group"
             >
 
-              {/* Course Image */}
+              {/* course image */}
 
               <div className="relative">
 
@@ -71,7 +71,7 @@ const VendorCourses = () => {
                   className="h-44 w-full object-cover group-hover:scale-105 transition duration-300"
                 />
 
-                {/* Price Badge */}
+                {/* price badge */}
 
                 <div className="absolute top-3 right-3 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow">
                   ₹{course.price}
@@ -79,7 +79,7 @@ const VendorCourses = () => {
 
               </div>
 
-              {/* Course Details */}
+              {/* course details */}
 
               <div className="p-4">
 

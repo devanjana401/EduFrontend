@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
+import Popup from "../components/Popup";
 import "../css/Auth.css";
 
 const VendorSignup = () => {
@@ -17,7 +18,11 @@ const VendorSignup = () => {
   const [certificate,setCertificate] = useState(null);
   const [idProof,setIdProof] = useState(null);
   const [loading,setLoading] = useState(false);
-  const [message,setMessage] = useState("");
+  
+  // Popup states
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("success");
 
   const navigate = useNavigate();
 
@@ -30,11 +35,20 @@ const VendorSignup = () => {
     if(type==="id_proof") setIdProof(e.target.files[0]);
   };
 
+  const showPopup = (message, type = "success") => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setPopupOpen(false);
+  };
+
   const handleSubmit = async(e)=>{
     e.preventDefault();
 
     setLoading(true);
-    setMessage("");
 
     const data = new FormData();
 
@@ -51,7 +65,7 @@ const VendorSignup = () => {
         headers:{ "Content-Type":"multipart/form-data" }
       });
 
-      setMessage("Request submitted successfully");
+      showPopup("Request submitted successfully! Redirecting to login...", "success");
 
       setTimeout(()=>{
         navigate("/login");
@@ -59,7 +73,7 @@ const VendorSignup = () => {
 
     }catch(err){
 
-      setMessage("Failed to submit request");
+      showPopup(err.response?.data?.message || "Failed to submit request. Please try again.", "error");
       console.log(err);
 
     }finally{
@@ -78,7 +92,13 @@ const VendorSignup = () => {
 
         <h2>Become a Teacher</h2>
 
-        {message && <p className="message-text">{message}</p>}
+        <Popup 
+          message={popupMessage}
+          type={popupType}
+          isOpen={popupOpen}
+          onClose={closePopup}
+          autoClose={3000}
+        />
 
         <form onSubmit={handleSubmit} encType="multipart/form-data">
 
@@ -116,7 +136,7 @@ const VendorSignup = () => {
           </div>
 
           <div className="form-group">
-            <label>Experience</label>
+            <label>Experience (Years)</label>
             <input
               type="number"
               name="experience_years"

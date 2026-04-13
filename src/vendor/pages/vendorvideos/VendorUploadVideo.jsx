@@ -5,13 +5,12 @@ import { useParams, useNavigate } from "react-router-dom";
 
 const VendorUploadVideo = () => {
 
-  const { id } = useParams();
+  const { id } = useParams();   // course id
   const navigate = useNavigate();
 
-  const [video, setVideo] = useState({
+  const [videoData, setVideoData] = useState({
     title: "",
     description: "",
-    course: id,
     video: null
   });
 
@@ -19,8 +18,8 @@ const VendorUploadVideo = () => {
 
     const { name, value, files } = e.target;
 
-    setVideo({
-      ...video,
+    setVideoData({
+      ...videoData,
       [name]: files ? files[0] : value
     });
 
@@ -32,21 +31,32 @@ const VendorUploadVideo = () => {
 
     const formData = new FormData();
 
-    Object.keys(video).forEach(key => {
-      formData.append(key, video[key]);
-    });
+    formData.append("title", videoData.title);
+    formData.append("description", videoData.description);
+    formData.append("video", videoData.video);
+    formData.append("course", id);   // VERY IMPORTANT
 
     try {
 
-      await API.post("/vendorside/upload-video/", formData);
+      const res = await API.post(
+        "/vendorside/upload-video/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      );
 
-      alert("Video Uploaded");
+      console.log("Uploaded:", res.data);
+
+      alert("Video Uploaded Successfully");
 
       navigate(`/vendor/course/${id}`);
 
     } catch (error) {
 
-      console.log(error);
+      console.log("Upload Error:", error.response?.data || error);
 
     }
 
@@ -56,42 +66,52 @@ const VendorUploadVideo = () => {
 
     <VendorLayout>
 
-      <div className="p-6">
+      <div className="p-8 bg-gray-50 min-h-screen">
 
-        <h2 className="text-2xl font-bold mb-6">Upload Video</h2>
+        <div className="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-
-          <input
-            type="text"
-            name="title"
-            placeholder="Video Title"
-            className="border p-3 rounded w-full"
-            onChange={handleChange}
-            required
-          />
-
-          <textarea
-            name="description"
-            placeholder="Description"
-            className="border p-3 rounded w-full"
-            onChange={handleChange}
-            required
-          />
-
-          <input
-            type="file"
-            name="video"
-            className="border p-3 rounded w-full"
-            onChange={handleChange}
-            required
-          />
-
-          <button className="bg-blue-600 text-white px-6 py-3 rounded">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800">
             Upload Video
-          </button>
+          </h2>
 
-        </form>
+          <form onSubmit={handleSubmit} className="space-y-4">
+
+            <input
+              type="text"
+              name="title"
+              placeholder="Video Title"
+              className="border p-3 rounded w-full"
+              onChange={handleChange}
+              required
+            />
+
+            <textarea
+              name="description"
+              placeholder="Description"
+              className="border p-3 rounded w-full"
+              onChange={handleChange}
+              required
+            />
+
+            <input
+              type="file"
+              name="video"
+              className="border p-3 rounded w-full"
+              accept="video/*"
+              onChange={handleChange}
+              required
+            />
+
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded w-full"
+            >
+              Upload Video
+            </button>
+
+          </form>
+
+        </div>
 
       </div>
 

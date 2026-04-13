@@ -17,7 +17,7 @@ const VendorCreateCourse = () => {
     coverphoto: null
   });
 
-  // Fetch categories on mount
+  // fetch categories on mount
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -31,7 +31,7 @@ const VendorCreateCourse = () => {
     }
   };
 
-  // Handle input changes
+  // handle input changes
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
@@ -40,12 +40,13 @@ const VendorCreateCourse = () => {
       [name]: files ? files[0] : name === "category" ? parseInt(value) : value
     });
   };
+  
 
-  // Submit form
+  // submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare FormData for file upload
+    // prepare FormData for file upload
     const formData = new FormData();
     Object.keys(course).forEach((key) => {
       formData.append(key, course[key]);
@@ -68,7 +69,7 @@ const VendorCreateCourse = () => {
         <h2 className="text-2xl font-bold mb-6">Create Course</h2>
 
         <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4">
-          {/* Course Name */}
+          {/* course name */}
           <input
             type="text"
             name="coursename"
@@ -78,7 +79,7 @@ const VendorCreateCourse = () => {
             required
           />
 
-          {/* Headline */}
+          {/* headline */}
           <input
             type="text"
             name="headline"
@@ -88,7 +89,7 @@ const VendorCreateCourse = () => {
             required
           />
 
-          {/* Price */}
+          {/* price */}
           <input
             type="number"
             name="price"
@@ -98,7 +99,7 @@ const VendorCreateCourse = () => {
             required
           />
 
-          {/* Category Dropdown */}
+          {/* category dropdown */}
           <select
             name="category"
             className="border p-3 rounded"
@@ -113,7 +114,7 @@ const VendorCreateCourse = () => {
             ))}
           </select>
 
-          {/* Description */}
+          {/* description */}
           <textarea
             name="description"
             placeholder="Description"
@@ -122,7 +123,7 @@ const VendorCreateCourse = () => {
             required
           />
 
-          {/* About */}
+          {/* about */}
           <textarea
             name="about"
             placeholder="About Course"
@@ -131,7 +132,7 @@ const VendorCreateCourse = () => {
             required
           />
 
-          {/* Cover Photo */}
+          {/* cover photo */}
           <input
             type="file"
             name="coverphoto"
@@ -139,7 +140,7 @@ const VendorCreateCourse = () => {
             onChange={handleChange}
           />
 
-          {/* Submit Button */}
+          {/* submit Button */}
           <button className="bg-blue-600 text-white p-3 rounded md:col-span-2">
             Create Course
           </button>

@@ -38,8 +38,7 @@ function App() {
 
       <Routes>
 
-        {/* Public routes */}
-
+        {/* public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
@@ -48,8 +47,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/vendor-signup" element={<VendorSignup />} />
 
-        {/* Admin routes */}
-
+        {/* admin routes */}
         <Route
           path="/admin"
           element={
@@ -58,7 +56,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/courses"
           element={
@@ -67,7 +64,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/users"
           element={
@@ -76,7 +72,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/vendors"
           element={
@@ -85,7 +80,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/categories"
           element={
@@ -94,7 +88,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/vendor-requests"
           element={
@@ -103,7 +96,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/vendor/:id"
           element={
@@ -112,7 +104,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/vendor-update/:id"
           element={
@@ -121,7 +112,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/vendor-request-view/:id"
           element={
@@ -130,7 +120,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/admin/vendor-request-update/:id"
           element={
@@ -140,8 +129,7 @@ function App() {
           }
         />
 
-        {/* Vendor routes */}
-
+        {/* vendor routes */}
         <Route
           path="/vendor"
           element={
@@ -150,7 +138,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/vendor/courses"
           element={
@@ -159,7 +146,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/vendor/create-course"
           element={
@@ -168,9 +154,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        {/* Course Videos */}
-
+        {/* course videos */}
         <Route
           path="/vendor/course/:id"
           element={
@@ -179,9 +163,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        {/* Upload Video */}
-
+        {/* upload video */}
         <Route
           path="/vendor/course/:id/upload-video"
           element={
@@ -190,7 +172,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-
+        
       </Routes>
 
       <Footer />
