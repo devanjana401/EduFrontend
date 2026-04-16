@@ -34,13 +34,13 @@ const Popup = ({
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       
-      {/* BACKDROP */}
+      {/* bachdrop */}
       <div
         className="absolute inset-0 bg-black/40 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      {/* POPUP */}
+      {/* popup */}
       <div
         className={`
           relative z-10
@@ -55,19 +55,19 @@ const Popup = ({
       >
         <div className="flex items-start gap-4">
           
-          {/* ICON */}
+          {/* icon */}
           <div className="text-xl">
             {icons[type]}
           </div>
 
-          {/* MESSAGE */}
+          {/* message */}
           <div className="flex-1">
             <p className="text-white text-sm font-medium leading-relaxed">
               {message}
             </p>
           </div>
 
-          {/* CLOSE BUTTON */}
+          {/* close button */}
           <button
             onClick={onClose}
             className="text-white/70 hover:text-white text-lg transition"
@@ -77,7 +77,7 @@ const Popup = ({
         </div>
       </div>
 
-      {/* ANIMATION */}
+      {/* animation */}
       <style>
         {`
           @keyframes fadeInScale {
