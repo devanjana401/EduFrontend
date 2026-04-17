@@ -34,7 +34,7 @@ const VendorUploadVideo = () => {
     formData.append("title", videoData.title);
     formData.append("description", videoData.description);
     formData.append("video", videoData.video);
-    formData.append("course", id);   // VERY IMPORTANT
+    formData.append("course", id);   
 
     try {
 

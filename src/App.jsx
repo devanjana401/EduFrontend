@@ -23,13 +23,21 @@ import VendorProfileView from "./admin/pages/vendors/VendorProfileView";
 import VendorProfileEdit from "./admin/pages/vendors/VendorProfileEdit";
 import VendorRequestView from "./admin/pages/vendorRequest/VendorRequestView";
 import VendorRequestEdit from "./admin/pages/vendorRequest/VendorRequestEdit";
-import Courses from "./admin/pages/Courses";
+import Courses from "./admin/pages/courses/Courses";
 
 import VendorDashboard from "./vendor/pages/VendorDashboard";
 import VendorCreateCourse from "./vendor/pages/vendorcourses/VendorCreateCourse";
 import VendorCourses from "./vendor/pages/vendorcourses/VendorCourses";
 import VendorUploadVideo from "./vendor/pages/vendorvideos/VendorUploadVideo";
 import VendorVideos from "./vendor/pages/vendorvideos/VendorVideos";
+
+import UserCourses from "./user/pages/UserCourses";
+import CourseDetail from "./user/pages/CourseDetail";
+import MyCourses from "./user/pages/MyCourses";
+import VideoPlayer from "./user/pages/VideoPlayer";
+import ApprovedCourses from "./admin/pages/courses/ApprovedCourses";
+import CourseView from "./admin/pages/courses/CourseView";
+import CourseEdit from "./admin/pages/courses/CourseEdit";
 
 function App() {
   return (
@@ -46,6 +54,33 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/vendor-signup" element={<VendorSignup />} />
+
+
+        {/* user routes */}
+
+        {/* all courses */}
+        <Route path="/courses" element={<UserCourses />} />
+        {/* single course detail */}
+        <Route path="/course/:id" element={<CourseDetail />} />
+        {/* my purchased courses */}
+        <Route
+          path="/my-courses"
+          element={
+            <ProtectedRoute allowedRole={3}>
+              <MyCourses />
+            </ProtectedRoute>
+          }
+        />
+        {/* watch videos */}
+        <Route
+          path="/watch/:id"
+          element={
+            <ProtectedRoute allowedRole={3}>
+              <VideoPlayer />
+            </ProtectedRoute>
+          }
+        />
+
 
         {/* admin routes */}
         <Route
@@ -128,6 +163,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/approved-courses"
+          element={
+            <ProtectedRoute allowedRole={1}>
+              <ApprovedCourses />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/admin/course-view/:id" element={<CourseView />} />
+        <Route path="/admin/course-edit/:id" element={<CourseEdit />} />
 
         {/* vendor routes */}
         <Route
@@ -172,7 +218,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
       </Routes>
 
       <Footer />
