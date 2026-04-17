@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import VendorLayout from "../../components/VendorLayout";
 import API from "../../../services/api";
 import { useParams, useNavigate } from "react-router-dom";
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
 const VendorVideos = () => {
-
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -44,19 +44,37 @@ const VendorVideos = () => {
     }
   };
 
+  // actions
+  const handleView = (videoId) => {
+    navigate(`/vendor/video/${videoId}`);
+  };
+
+  const handleEdit = (videoId) => {
+    navigate(`/vendor/video/edit/${videoId}`);
+  };
+
+  const handleDelete = async (videoId) => {
+    if (window.confirm("Are you sure to delete this video?")) {
+      try {
+        await API.delete(`/vendorside/video-delete/${videoId}/`);
+        alert("Video deleted successfully");
+        fetchVideos();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <VendorLayout>
-
       <div className="p-8 bg-gray-50 min-h-screen">
 
         <div className="flex justify-between mb-6 items-center">
-
           <h2 className="text-3xl font-bold text-gray-800">
             Course Videos
           </h2>
 
           <div className="flex gap-3">
-
             <button
               onClick={() => navigate(`/vendor/course/${id}/upload-video`)}
               className="bg-blue-600 text-white px-5 py-2 rounded-lg"
@@ -64,23 +82,19 @@ const VendorVideos = () => {
               Upload Video
             </button>
 
-            {/* request button */}
             {!course?.publishadmin && (
               <button
                 onClick={handleRequestApproval}
                 disabled={videos.length === 0 || course?.is_requested}
-                className={`px-5 py-2 rounded-lg text-white ${
-                  videos.length === 0 || course?.is_requested
+                className={`px-5 py-2 rounded-lg text-white ${videos.length === 0 || course?.is_requested
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-green-600"
-                }`}
+                  }`}
               >
                 {course?.is_requested ? "Requested" : "Request Approval"}
               </button>
             )}
-
           </div>
-
         </div>
 
         {/* status */}
@@ -109,9 +123,7 @@ const VendorVideos = () => {
         )}
 
         <div className="grid md:grid-cols-3 gap-6">
-
-          {videos.map(video => (
-
+          {videos.map((video) => (
             <div key={video.id} className="bg-white p-4 rounded shadow">
 
               <video
@@ -128,14 +140,31 @@ const VendorVideos = () => {
                 {video.description}
               </p>
 
+              {/* action buttons */}
+              <div className="flex justify-center gap-4 mt-3 text-lg">
+
+                <FaEye
+                  className="cursor-pointer text-black hover:text-gray-700 transition"
+                  onClick={() => handleView(video.id)}
+                />
+
+                <FaEdit
+                  className="cursor-pointer text-black hover:text-gray-700 transition"
+                  onClick={() => handleEdit(video.id)}
+                />
+
+                <FaTrash
+                  className="cursor-pointer text-black hover:text-red-600 transition"
+                  onClick={() => handleDelete(video.id)}
+                />
+
+              </div>
+
             </div>
-
           ))}
-
         </div>
 
       </div>
-
     </VendorLayout>
   );
 };

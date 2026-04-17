@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import VendorLayout from "../../components/VendorLayout";
 import API from "../../../services/api";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
 const VendorCourses = () => {
-
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
 
@@ -18,6 +18,27 @@ const VendorCourses = () => {
       setCourses(res.data);
     } catch (error) {
       console.log(error.response?.data || error);
+    }
+  };
+
+  // actions
+  const handleView = (id) => {
+    navigate(`/vendor/course/${id}`);
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/vendor/course/edit/${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure to delete this course?")) {
+      try {
+        await API.delete(`/vendorside/course-delete/${id}/`);
+        alert("Course deleted successfully");
+        fetchCourses();
+      } catch (error) {
+        console.log(error.response?.data || error);
+      }
     }
   };
 
@@ -37,15 +58,18 @@ const VendorCourses = () => {
 
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 
-          {courses.map(course => (
+          {courses.map((course) => (
 
             <div
               key={course.id}
-              onClick={() => navigate(`/vendor/course/${course.id}`)}
-              className="bg-white rounded-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden group"
+              className="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden group"
             >
 
-              <div className="relative">
+              {/* image click view */}
+              <div
+                className="relative cursor-pointer"
+                onClick={() => handleView(course.id)}
+              >
                 <img
                   src={
                     course.coverphoto
@@ -67,7 +91,7 @@ const VendorCourses = () => {
                   {course.coursename}
                 </h3>
 
-                {/* ✅ STATUS */}
+                {/* status */}
                 <div className="mt-2">
                   {course.publishadmin ? (
                     <span className="text-green-600 text-sm font-semibold">
@@ -84,9 +108,25 @@ const VendorCourses = () => {
                   )}
                 </div>
 
-                <p className="text-gray-500 text-sm mt-1">
-                  Click to manage videos
-                </p>
+                {/* action buttons */}
+                <div className="flex justify-center gap-5 mt-4 text-lg">
+
+                  <FaEye
+                    className="cursor-pointer text-black hover:text-gray-700 transition"
+                    onClick={() => handleView(course.id)}
+                  />
+
+                  <FaEdit
+                    className="cursor-pointer text-black hover:text-gray-700 transition"
+                    onClick={() => handleEdit(course.id)}
+                  />
+
+                  <FaTrash
+                    className="cursor-pointer text-black hover:text-red-600 transition"
+                    onClick={() => handleDelete(course.id)}
+                  />
+
+                </div>
 
               </div>
 

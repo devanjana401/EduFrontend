@@ -38,6 +38,8 @@ import VideoPlayer from "./user/pages/VideoPlayer";
 import ApprovedCourses from "./admin/pages/courses/ApprovedCourses";
 import CourseView from "./admin/pages/courses/CourseView";
 import CourseEdit from "./admin/pages/courses/CourseEdit";
+import ViewVideo from "./vendor/pages/vendorvideos/ViewVideo";
+import EditVideo from "./vendor/pages/vendorvideos/EditVideo";
 
 function App() {
   return (
@@ -218,6 +220,9 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/vendor/video/:id" element={<ViewVideo />} />
+        <Route path="/vendor/video/edit/:id" element={<EditVideo />} />
 
       </Routes>
 
