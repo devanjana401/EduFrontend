@@ -52,7 +52,7 @@ const Dashboard = () => {
 
       <div className="p-6 bg-gray-100 min-h-screen">
 
-        {/* Welcome Section */}
+        {/* welcome section */}
 
         <div className="flex flex-col md:flex-row gap-4 mb-6">
 
@@ -69,7 +69,7 @@ const Dashboard = () => {
 
         </div>
 
-        {/* Statistics Cards */}
+        {/* statistics cards */}
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 

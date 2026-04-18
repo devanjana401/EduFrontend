@@ -5,17 +5,15 @@ const Contact = () => {
   return (
     <div className="w-full">
 
-      {/* Page Title */}
       <div className="text-center py-10">
         <h1 className="text-4xl font-light underline underline-offset-8">
           Contact Us
         </h1>
       </div>
 
-      {/* Content */}
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-10 pb-16">
 
-        {/* Google Map */}
+        {/* map */}
         <div className="rounded-xl overflow-hidden shadow-lg">
           <iframe
             title="map"
@@ -25,7 +23,7 @@ const Contact = () => {
           ></iframe>
         </div>
 
-        {/* Contact Form */}
+        {/* contact form */}
         <div className="bg-white shadow-lg rounded-xl p-6 md:p-8">
           <ContactForm />
         </div>

@@ -19,7 +19,7 @@ const VendorSignup = () => {
   const [idProof,setIdProof] = useState(null);
   const [loading,setLoading] = useState(false);
   
-  // Popup states
+  // popup states
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
   const [popupType, setPopupType] = useState("success");

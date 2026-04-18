@@ -4,7 +4,6 @@ const About = () => {
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
 
-      {/* Heading Section */}
       <div className="text-center mb-12">
         <h2 className="text-3xl font-bold text-slate-700">
           About Our E-Learning Platform
@@ -18,10 +17,8 @@ const About = () => {
         </p>
       </div>
 
-      {/* Mission & Vision */}
       <div className="flex flex-col md:flex-row gap-6 justify-center">
 
-        {/* Mission */}
         <div className="bg-white shadow-md rounded-xl p-6 md:w-1/2">
           <h3 className="font-semibold text-lg mb-2">Our Mission</h3>
 
@@ -33,7 +30,6 @@ const About = () => {
           </p>
         </div>
 
-        {/* Vision */}
         <div className="bg-white shadow-md rounded-xl p-6 md:w-1/2">
           <h3 className="font-semibold text-lg mb-2">Our Vision</h3>
 
@@ -47,7 +43,6 @@ const About = () => {
 
       </div>
 
-      {/* Why Choose Us */}
       <div className="mt-16 flex justify-center">
         <div className="border-2 border-dashed border-teal-300 rounded-[50px_60px_55px_65px] bg-teal-50 shadow-md max-w-3xl w-full p-8 text-center">
 

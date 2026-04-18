@@ -24,7 +24,7 @@ const Home = () => {
     { img: student1, text: "I improved my coding skills with real projects.", name: "Student 5" },
   ];
 
-  // Update visible slides based on window width
+  // update visible slides based on window width
   const updateVisibleSlides = () => {
     if (window.innerWidth <= 600) setVisibleSlides(1);
     else if (window.innerWidth <= 900) setVisibleSlides(2);

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import VendorLayout from "../components/VendorLayout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import API from "../../services/api";
 
 const VendorDashboard = () => {
+
+  const navigate = useNavigate();
 
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
@@ -14,18 +17,15 @@ const VendorDashboard = () => {
     earnings: 15000
   });
 
-  const [recentVideos] = useState([
-    { id: 1, title: "React Basics", date: "2026/04/01", views: 350 },
-    { id: 2, title: "Django REST API", date: "2026/03/28", views: 290 },
-    { id: 3, title: "Python for Beginners", date: "2026/03/25", views: 410 }
-  ]);
+  // dynamic recent videos
+  const [recentVideos, setRecentVideos] = useState([]);
 
   const WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
+  // time
   useEffect(() => {
 
     const updateTime = () => {
-
       const now = new Date();
 
       const currentTime =
@@ -41,7 +41,6 @@ const VendorDashboard = () => {
 
       setTime(currentTime);
       setDate(currentDate);
-
     };
 
     updateTime();
@@ -51,13 +50,31 @@ const VendorDashboard = () => {
 
   }, []);
 
+  // fetch recent videos
+  useEffect(() => {
+    fetchRecentVideos();
+  }, []);
+
+  const fetchRecentVideos = async () => {
+    try {
+      const res = await API.get("/vendorside/recent-videos/");
+      setRecentVideos(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // optional actions
+  const handleView = (id) => {
+    navigate(`/vendor/video/${id}`);
+  };
+
   return (
     <VendorLayout>
 
       <div className="p-6 bg-gray-100 min-h-screen">
 
-        {/* Welcome Section */}
-
+        {/* welcome section */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">
 
           <div className="flex-1 bg-gray-800 text-white p-6 rounded-lg">
@@ -66,10 +83,10 @@ const VendorDashboard = () => {
             <p className="mt-2">Upload videos and track student engagement.</p>
 
             <Link
-              to="/vendor/upload-video"
+              to="/vendor/courses"
               className="inline-block mt-4 bg-blue-500 px-4 py-2 rounded text-white"
             >
-              Upload New Video
+              Upload New Video To The Course
             </Link>
           </div>
 
@@ -80,8 +97,7 @@ const VendorDashboard = () => {
 
         </div>
 
-        {/* Statistics Cards */}
-
+        {/* statistics cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
 
           <div className="bg-white p-6 rounded shadow text-center">
@@ -106,8 +122,7 @@ const VendorDashboard = () => {
 
         </div>
 
-        {/* Recent Videos Table */}
-
+        {/* recent videos table */}
         <div className="bg-white p-6 rounded shadow">
 
           <h2 className="text-xl font-bold mb-4">Recent Videos</h2>
@@ -119,22 +134,48 @@ const VendorDashboard = () => {
                 <th className="p-2 border">Title</th>
                 <th className="p-2 border">Upload Date</th>
                 <th className="p-2 border">Views</th>
+                <th className="p-2 border">Actions</th>
               </tr>
             </thead>
 
             <tbody>
 
-              {recentVideos.map(video => (
-
-                <tr key={video.id} className="text-center">
-
-                  <td className="p-2 border">{video.title}</td>
-                  <td className="p-2 border">{video.date}</td>
-                  <td className="p-2 border">{video.views}</td>
-
+              {recentVideos.length === 0 ? (
+                <tr>
+                  <td colSpan="4" className="p-3 text-gray-500 text-center">
+                    No recent videos
+                  </td>
                 </tr>
+              ) : (
+                recentVideos.map(video => (
 
-              ))}
+                  <tr key={video.id} className="text-center">
+
+                    <td className="p-2 border">{video.title}</td>
+
+                    <td className="p-2 border">
+                      {video.created_at
+                        ? new Date(video.created_at).toLocaleDateString()
+                        : "N/A"}
+                    </td>
+
+                    <td className="p-2 border">
+                      {video.views || 0}
+                    </td>
+
+                    <td className="p-2 border">
+                      <button
+                        onClick={() => handleView(video.id)}
+                        className="bg-blue-500 text-white px-3 py-1 rounded"
+                      >
+                        View
+                      </button>
+                    </td>
+
+                  </tr>
+
+                ))
+              )}
 
             </tbody>
 

@@ -90,7 +90,7 @@ const ContactForm = () => {
 
       <form onSubmit={handleSubmit} className="space-y-5">
 
-        {/* Name */}
+        {/* name */}
         <div>
           <label className="block text-gray-700 mb-1 font-medium">
             Name
@@ -111,7 +111,7 @@ const ContactForm = () => {
           )}
         </div>
 
-        {/* Email */}
+        {/* email */}
         <div>
           <label className="block text-gray-700 mb-1 font-medium">
             Email
@@ -132,7 +132,7 @@ const ContactForm = () => {
           )}
         </div>
 
-        {/* Phone */}
+        {/* phone */}
         <div>
           <label className="block text-gray-700 mb-1 font-medium">
             Phone
@@ -153,7 +153,7 @@ const ContactForm = () => {
           )}
         </div>
 
-        {/* Message */}
+        {/* message */}
         <div>
           <label className="block text-gray-700 mb-1 font-medium">
             Message

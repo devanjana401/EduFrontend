@@ -151,7 +151,7 @@ const VendorProfileEdit = () => {
               className="border rounded-lg p-3 col-span-2 focus:ring-2 focus:ring-blue-400"
             />
 
-            {/* Certificate */}
+            {/* certificate */}
             <div className="col-span-2">
               <label className="font-medium text-gray-700">Certificate</label>
 
@@ -176,7 +176,7 @@ const VendorProfileEdit = () => {
               />
             </div>
 
-            {/* ID Proof */}
+            {/* id proof */}
             <div className="col-span-2">
               <label className="font-medium text-gray-700">ID Proof</label>
 
