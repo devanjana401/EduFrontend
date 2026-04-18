@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../components/AdminLayout";
+import BackButton from "../../components/BackButton";
 
 const Dashboard = () => {
 
@@ -49,6 +50,9 @@ const Dashboard = () => {
 
   return (
     <AdminLayout>
+      <div className="flex justify-start md:items-start items-center mb-2 md:w-[40px] w-[60px] ">
+        <BackButton/>
+      </div>
 
       <div className="p-6 bg-gray-100 min-h-screen">
 

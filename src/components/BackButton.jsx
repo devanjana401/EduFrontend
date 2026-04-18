@@ -1,23 +1,28 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { IoArrowBackOutline } from "react-icons/io5";
 
-const BackButton = ({ label = "Back", to = null }) => {
+const BackButton = ({ label = "Back", to, onClick }) => {
   const navigate = useNavigate();
 
-  const handleBack = () => {
-    if (to) {
-      navigate(to);        // go to specific route
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    } else if (to) {
+      navigate(to);
     } else {
-      navigate(-1);        // go to previous page
+      navigate(-1);
     }
   };
 
   return (
-    <button
-      onClick={handleBack}
-      className="flex items-center gap-2 bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
+    
+  <button 
+      onClick={handleClick}
+      style={{borderRadius : '140px'}}
+      className="inline-block px-1 py-1 text-xs text-white bg-blue-600 rounded-full hover:bg-blue-700 transition "
     >
-      ← {label}
+      <IoArrowBackOutline size={"22"}/>
     </button>
   );
 };

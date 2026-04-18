@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AdminLayout from "../../components/AdminLayout";
 import API from "../../../services/api";
+import BackButton from "../../../components/BackButton";
 
 const VendorProfileEdit = () => {
   const { id } = useParams();
@@ -82,6 +83,9 @@ const VendorProfileEdit = () => {
 
   return (
     <AdminLayout>
+      <div className="flex justify-start md:items-start items-center mb-2 md:w-[40px] w-[60px] ">
+        <BackButton/>
+      </div>
       <div className="p-8 flex justify-center">
         <div className="w-full max-w-3xl bg-white shadow-lg rounded-xl p-8">
 

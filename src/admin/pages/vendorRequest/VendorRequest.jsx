@@ -3,6 +3,7 @@ import AdminLayout from "../../components/AdminLayout";
 import API from "../../../services/api";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEdit, FaTrash, FaCheck } from "react-icons/fa";
+import BackButton from "../../../components/BackButton";
 
 const VendorRequest = () => {
   const [requests, setRequests] = useState([]);
@@ -42,6 +43,9 @@ const VendorRequest = () => {
 
   return (
     <AdminLayout>
+      <div className="flex justify-start md:items-start items-center mb-2 md:w-[40px] w-[60px] ">
+        <BackButton/>
+      </div>
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-4">Vendor Requests</h2>
         <table className="min-w-full border">

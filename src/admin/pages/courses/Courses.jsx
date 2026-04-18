@@ -3,6 +3,7 @@ import AdminLayout from "../../components/AdminLayout";
 import API from "../../../services/api";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEdit, FaTrash, FaCheck } from "react-icons/fa";
+import BackButton from "../../../components/BackButton";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -56,8 +57,13 @@ const Courses = () => {
     navigate(`/admin/course-edit/${id}`);
   };
 
+
+
   return (
     <AdminLayout>
+      <div className="flex justify-start md:items-start items-center mb-2 md:w-[40px] w-[60px] ">
+        <BackButton/>
+      </div>
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-6">Pending Courses</h2>
 

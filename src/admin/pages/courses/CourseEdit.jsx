@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AdminLayout from "../../components/AdminLayout";
 import API from "../../../services/api";
+import BackButton from "../../../components/BackButton";
 
 const CourseEdit = () => {
   const { id } = useParams();
@@ -71,6 +72,9 @@ const CourseEdit = () => {
 
   return (
     <AdminLayout>
+      <div className="flex justify-start md:items-start items-center mb-2 md:w-[40px] w-[60px] ">
+        <BackButton/>
+      </div>
       <div className="p-6 max-w-2xl mx-auto">
         <h2 className="text-2xl font-bold mb-6">Edit Course</h2>
 

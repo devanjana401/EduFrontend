@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../components/AdminLayout";
 import API from "../../services/api";
+import BackButton from "../../components/BackButton";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -28,6 +29,9 @@ const Categories = () => {
 
   return (
     <AdminLayout>
+      <div className="flex justify-start md:items-start items-center mb-2 md:w-[40px] w-[60px] ">
+        <BackButton/>
+      </div>
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-6">Categories</h2>
         <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4 mb-10">

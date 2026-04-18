@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AdminLayout from "../../components/AdminLayout";
+import BackButton from "../../../components/BackButton";
 import API from "../../../services/api";
 
 const CourseView = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
+  
 
   useEffect(() => {
     fetchCourse();
@@ -24,6 +26,9 @@ const CourseView = () => {
 
   return (
     <AdminLayout>
+      <div className="flex justify-start md:items-start items-center mb-2 md:w-[40px] w-[60px] ">
+        <BackButton/>
+      </div>
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-4">Course Details</h2>
 
