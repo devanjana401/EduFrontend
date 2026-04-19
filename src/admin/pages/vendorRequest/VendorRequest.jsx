@@ -19,16 +19,7 @@ const VendorRequest = () => {
       .catch((err) => console.log(err));
   };
 
-  const approveRequest = (id) => {
-    if (window.confirm("Approve this vendor request?")) {
-      API.post(`adminside/approve-vendor/${id}/`)
-        .then((res) => {
-          alert(res.data.message);
-          fetchRequests();
-        })
-        .catch((err) => console.log(err));
-    }
-  };
+
 
   const deleteRequest = (id) => {
     if (window.confirm("Delete this request?")) {
@@ -83,12 +74,7 @@ const VendorRequest = () => {
                       style={{ cursor: "pointer", color: "red" }}
                       onClick={() => deleteRequest(r.id)}
                     />
-                    {r.status == "approved" && (
-                      <FaCheck
-                        style={{ cursor: "pointer", color: "green" }}
-                        onClick={() => approveRequest(r.id)}
-                      />
-                    )}
+                  
                   </div>
                 </td>
               </tr>
