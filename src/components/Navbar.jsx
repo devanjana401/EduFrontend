@@ -4,7 +4,6 @@ import { IoBookSharp } from "react-icons/io5";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 
 const Navbar = () => {
-
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const email = localStorage.getItem("email");
@@ -21,101 +20,104 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-950 text-white sticky top-0 z-50">
+    <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
 
-      <div className="max-w-7xl h-20 mx-auto px-4 py-3 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="bg-blue-600 text-white p-2 rounded-xl group-hover:bg-blue-700 transition">
+              <IoBookSharp className="text-2xl" />
+            </div>
+            <span className="font-bold text-3xl text-slate-800">EduConnect</span>
+          </Link>
 
-        {/* logo */}
-        <Link to="/" className="flex items-center text-4xl font-bold">
-          <IoBookSharp className="mr-2 text-5xl" />
-          EduConnect
-        </Link>
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8 font-medium text-slate-600">
+            <Link to="/" className="hover:text-blue-600  transition">Home</Link>
+            <Link to="/courses" className="hover:text-blue-600 transition">Courses</Link>
+            <Link to="/about" className="hover:text-blue-600 transition">About Us</Link>
+            <Link to="/contact" className="hover:text-blue-600 transition">Contact</Link>
+          </div>
 
-        {/* desktop menu */}
-        <div className="hidden md:flex gap-8 text-2xl">
-          <Link to="/" className="hover:text-gray-200">Home</Link>
-          <Link to="/courses" className="hover:text-gray-200">Courses</Link>
-          <Link to="/about" className="hover:text-gray-200">About Us</Link>
-          <Link to="/contact" className="hover:text-gray-200">Contact</Link>
-        </div>
-
-        {/* profile */}
-        <div className="hidden md:flex items-center relative">
-
-          {token ? (
-            <>
-              <FaUserCircle
-                size={30}
-                className="cursor-pointer"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              />
-
-              {dropdownOpen && (
-                <div className="absolute right-0 top-10 bg-white text-black rounded shadow-lg p-4 w-60 z-50 text-center">
-
-                  <p className="text-sm break-all mb-3">{email}</p>
-
-                  <button
-                    onClick={handleLogout}
-                    className="bg-blue-800 text-white px-3 py-1 text-sm rounded hover:bg-red-500"
-                  >
-                    Logout
-                  </button>
-
-                </div>
-              )}
-            </>
-          ) : (
-            <Link to="/login" className="hover:text-gray-200 text-2xl">
-              Login
-            </Link>
-          )}
-
-        </div>
-
-        {/* hamburger */}
-        <div
-          className="md:hidden cursor-pointer"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <FaBars size={24} />
-        </div>
-
-      </div>
-
-      {/* mobile menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-blue-950 px-6 pb-6 z-50">
-
-          <div className="flex flex-col gap-4 text-lg items-center">
-
-            <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-            <Link to="/courses" onClick={() => setMenuOpen(false)}>Courses</Link>
-            <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
-            <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
-
+          {/* Profile / Auth */}
+          <div className="hidden md:flex items-center gap-4">
             {token ? (
-              <>
-                <p className="text-sm break-all">{email}</p>
-
+              <div className="relative">
                 <button
-                  onClick={handleLogout}
-                  className="bg-blue-700 py-1 px-4 rounded hover:bg-red-500 w-fit"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="text-slate-600 hover:text-blue-600"
                 >
-                  Logout
+                  <FaUserCircle size={28} />
                 </button>
-              </>
-            ) : (
-              <Link to="/login" onClick={() => setMenuOpen(false)}>
-                Login
-              </Link>
-            )}
 
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-3 w-56 bg-white rounded-xl shadow-lg border py-2">
+                    <div className="px-4 py-3 border-b">
+                      <p className="text-sm font-medium truncate">{email}</p>
+                    </div>
+                    <div className="p-2">
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <Link to="/login" className="text-slate-600 hover:text-blue-600 px-4 py-2">
+                  Log in
+                </Link>
+                <Link to="/signup" className="bg-blue-600 text-white hover:bg-blue-700 px-5 py-2.5 rounded-xl">
+                  Sign up
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button onClick={() => setMenuOpen(!menuOpen)}>
+              <FaBars size={24} />
+            </button>
           </div>
 
         </div>
-      )}
+      </div>
 
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-white border-t shadow">
+          <div className="px-4 py-4 space-y-2">
+            <Link to="/" className="block py-2 hover:text-blue-600">Home</Link>
+            <Link to="/courses" className="block py-2 hover:text-blue-600">Courses</Link>
+            <Link to="/about" className="block py-2 hover:text-blue-600">About</Link>
+            <Link to="/contact" className="block py-2 hover:text-blue-600">Contact</Link>
+
+            {token ? (
+              <button
+                onClick={handleLogout}
+                className="w-full mt-3 bg-red-100 text-red-600 py-2 rounded"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link to="/login" className="block text-center border py-2 rounded">
+                  Log in
+                </Link>
+                <Link to="/signup" className="block text-center bg-blue-600 text-white py-2 rounded">
+                  Sign up
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

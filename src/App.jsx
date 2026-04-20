@@ -16,6 +16,7 @@ import Contact from "./pages/Contact";
 import AdminRoutes from "./routes/AdminRoutes";
 import VendorRoutes from "./routes/VendorRoutes";
 import UserRoutes from "./routes/UserRoutes";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
       </Routes>
 
       <Footer />
+      <ScrollToTop />
       <ScreenButton />
     </>
   );
