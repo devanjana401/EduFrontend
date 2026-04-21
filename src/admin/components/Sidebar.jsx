@@ -14,6 +14,8 @@ const Sidebar = () => {
     // course sections
     { name: "Pending Courses", path: "/admin/courses" }, 
     { name: "Approved Courses", path: "/admin/approved-courses" }, 
+
+    { name: "Purchased Users", path: "/admin/purchases" },
   ];
 
   return (

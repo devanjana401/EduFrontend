@@ -8,6 +8,8 @@ import VendorVideos from "../vendor/pages/vendorvideos/VendorVideos";
 import VendorUploadVideo from "../vendor/pages/vendorvideos/VendorUploadVideo";
 import ViewVideo from "../vendor/pages/vendorvideos/ViewVideo";
 import EditVideo from "../vendor/pages/vendorvideos/EditVideo";
+import VendorPurchasedUsers from "../vendor/pages/VendorPurchasedUsers";
+import VendorProfile from "../vendor/pages/VendorProfile";
 
 const VendorRoutes = () => {
   return (
@@ -19,6 +21,10 @@ const VendorRoutes = () => {
       <Route path="/vendor/course/:id/upload-video" element={<ProtectedRoute allowedRole={2}><VendorUploadVideo /></ProtectedRoute>} />
       <Route path="/vendor/video/:id" element={<ViewVideo />} />
       <Route path="/vendor/video/edit/:id" element={<EditVideo />} />
+
+      <Route path="/vendor/purchases" element={<VendorPurchasedUsers />} />
+
+      <Route path="/vendor/profile" element={<VendorProfile />} />
     </>
   );
 };

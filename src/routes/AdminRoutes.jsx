@@ -14,6 +14,7 @@ import Courses from "../admin/pages/courses/Courses";
 import ApprovedCourses from "../admin/pages/courses/ApprovedCourses";
 import CourseView from "../admin/pages/courses/CourseView";
 import CourseEdit from "../admin/pages/courses/CourseEdit";
+import AdminPurchasedUsers from "../admin/pages/AdminPurchasedUsers";
 
 const AdminRoutes = () => {
   return (
@@ -31,6 +32,8 @@ const AdminRoutes = () => {
       <Route path="/admin/approved-courses" element={<ProtectedRoute allowedRole={1}><ApprovedCourses /></ProtectedRoute>} />
       <Route path="/admin/course-view/:id" element={<CourseView />} />
       <Route path="/admin/course-edit/:id" element={<CourseEdit />} />
+
+      <Route path="/admin/purchases" element={<AdminPurchasedUsers />} />
     </>
   );
 };

@@ -65,21 +65,11 @@ const VendorSidebar = () => {
 
         <li>
           <Link
-            to="/vendor/students"
+            to="/vendor/purchases"
             className="flex items-center gap-2 hover:text-blue-400"
           >
             <FaUserGraduate />
             Students
-          </Link>
-        </li>
-
-        <li>
-          <Link
-            to="/vendor/analytics"
-            className="flex items-center gap-2 hover:text-blue-400"
-          >
-            <FaChartBar />
-            Analytics
           </Link>
         </li>
 
