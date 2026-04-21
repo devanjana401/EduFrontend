@@ -12,13 +12,13 @@ const UserRoutes = () => {
       <Route path="/courses" element={<UserCourses />} />
       <Route path="/course/:id" element={<CourseDetail />} />
 
-      <Route path="/my-courses" element={
+      <Route path="/course/my-courses" element={
         <ProtectedRoute allowedRole={3}>
           <MyCourses />
         </ProtectedRoute>
       } />
 
-      <Route path="/watch/:id" element={
+      <Route path="/watch/:courseId/:videoId" element={
         <ProtectedRoute allowedRole={3}>
           <VideoPlayer />
         </ProtectedRoute>
