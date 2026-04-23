@@ -1,71 +1,53 @@
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../components/AdminLayout";
 import BackButton from "../../components/BackButton";
-// import eCharts
 import ReactECharts from "echarts-for-react";
+import API from "../../services/api";
 
 const Dashboard = () => {
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
 
-  const [stats] = useState({
-    users: 120,
-    vendors: 45,
-    requests: 8,
-    revenue: 5000,
+  // fallback values so UI never empty
+  const [stats, setStats] = useState({
+    users: 0,
+    vendors: 0,
+    categories: 0,
+    courses: 0,
+    purchased_users: 0,
   });
 
   const WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-  // chart configurations
+  // fetch dashboard data
+  useEffect(() => {
+    fetchDashboard();
+  }, []);
 
-  // 1-bar chart option 
-  const barChartOption = {
-    title: { text: "Monthly Revenue", left: "center" },
-    tooltip: { trigger: "axis" },
-    xAxis: {
-      type: "category",
-      data: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-    },
-    yAxis: { type: "value" },
-    series: [
-      {
-        data: [1200, 1900, 1500, 2500, 3200, 5000],
-        type: "bar",
-        itemStyle: { color: "#8b5cf6" }, // Purple
-      },
-    ],
+  const fetchDashboard = async () => {
+    try {
+      const res = await API.get("adminside/admin/dashboard-counts/");
+
+      console.log("API DATA:", res.data); 
+
+      setStats({
+        users: res.data.users ?? 0,
+        vendors: res.data.vendors ?? 0,
+        categories: res.data.categories ?? 0,
+        courses: res.data.courses ?? 0,
+        purchased_users: res.data.purchased_users ?? 0,
+      });
+
+    } catch (err) {
+      console.error("Dashboard API Error:", err);
+    }
   };
 
-  // 2-donut chart option (user/vendor distribution)
-  const donutChartOption = {
-    title: { text: "Platform Split", left: "center" },
-    tooltip: { trigger: "item" },
-    legend: { bottom: "0" },
-    series: [
-      {
-        name: "Access From",
-        type: "pie",
-        radius: ["40%", "70%"], // this creates the "Donut" hole
-        avoidLabelOverlap: false,
-        itemStyle: {
-          borderRadius: 10,
-          borderColor: "#fff",
-          borderWidth: 2,
-        },
-        label: { show: false },
-        data: [
-          { value: 120, name: "Users", itemStyle: { color: "#3b82f6" } },
-          { value: 45, name: "Vendors", itemStyle: { color: "#10b981" } },
-          { value: 8, name: "Pending", itemStyle: { color: "#f97316" } },
-        ],
-      },
-    ],
-  };
-
+  // time
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
+
       const currentTime =
         String(now.getHours()).padStart(2, "0") +
         ":" +
@@ -91,19 +73,68 @@ const Dashboard = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // bar chart
+  const barChartOption = {
+    title: { text: "Platform Overview", left: "center" },
+    tooltip: { trigger: "axis" },
+    xAxis: {
+      type: "category",
+      data: ["Users", "Vendors", "Courses", "Categories", "Purchased"],
+    },
+    yAxis: { type: "value" },
+    series: [
+      {
+        data: [
+          stats.users,
+          stats.vendors,
+          stats.courses,
+          stats.categories,
+          stats.purchased_users,
+        ],
+        type: "bar",
+        itemStyle: { color: "#8b5cf6" },
+      },
+    ],
+  };
+
+  // donut chart
+  const donutChartOption = {
+    title: { text: "Platform Data", left: "center" },
+    tooltip: { trigger: "item" },
+    legend: { bottom: "0" },
+    series: [
+      {
+        type: "pie",
+        radius: ["40%", "70%"],
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: "#fff",
+          borderWidth: 2,
+        },
+        data: [
+          { value: stats.users, name: "Users" },
+          { value: stats.vendors, name: "Vendors" },
+          { value: stats.categories, name: "Categories" },
+          { value: stats.courses, name: "Courses" },
+          { value: stats.purchased_users, name: "Purchased" },
+        ],
+      },
+    ],
+  };
+
   return (
     <AdminLayout>
-      <div className="flex justify-start md:items-start items-center mb-2 md:w-[40px] w-[60px] ">
+      <div className="flex justify-start md:items-start items-center mb-2 md:w-[40px] w-[60px]">
         <BackButton />
       </div>
 
       <div className="p-6 bg-gray-100 min-h-screen">
-        {/* welcome section */}
+
+        {/* Welcome */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-1 bg-gray-800 text-white p-6 rounded-lg">
             <h1 className="text-3xl font-bold mb-2">Hello Admin</h1>
             <p className="text-xl text-green-400">Welcome to Dashboard</p>
-            <p className="mt-2">Manage users, vendors and platform data.</p>
           </div>
 
           <div className="w-full md:w-60 bg-gray-800 text-white flex flex-col items-center justify-center rounded-lg p-4">
@@ -112,37 +143,57 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* statistics cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        {/* stats cards */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+
           <div className="bg-white p-6 rounded shadow text-center">
-            <h3 className="text-gray-500">Total Users</h3>
-            <p className="text-3xl font-bold text-blue-600">{stats.users}</p>
+            <h3>Users</h3>
+            <p className="text-3xl font-bold text-blue-600">
+              {stats.users || 0}
+            </p>
           </div>
+
           <div className="bg-white p-6 rounded shadow text-center">
-            <h3 className="text-gray-500">Total Vendors</h3>
-            <p className="text-3xl font-bold text-green-600">{stats.vendors}</p>
+            <h3>Vendors</h3>
+            <p className="text-3xl font-bold text-green-600">
+              {stats.vendors || 0}
+            </p>
           </div>
+
           <div className="bg-white p-6 rounded shadow text-center">
-            <h3 className="text-gray-500">Vendor Requests</h3>
-            <p className="text-3xl font-bold text-orange-500">{stats.requests}</p>
+            <h3>Categories</h3>
+            <p className="text-3xl font-bold text-yellow-500">
+              {stats.categories || 0}
+            </p>
           </div>
+
           <div className="bg-white p-6 rounded shadow text-center">
-            <h3 className="text-gray-500">Total Revenue</h3>
-            <p className="text-3xl font-bold text-purple-600">${stats.revenue}</p>
+            <h3>Courses</h3>
+            <p className="text-3xl font-bold text-purple-600">
+              {stats.courses || 0}
+            </p>
           </div>
+
+          <div className="bg-white p-6 rounded shadow text-center">
+            <h3>Purchased</h3>
+            <p className="text-3xl font-bold text-red-500">
+              {stats.purchased_users || 0}
+            </p>
+          </div>
+
         </div>
 
-        {/* charts section */}
+        {/* charts */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* bar chart card */}
+
           <div className="bg-white p-4 rounded shadow">
             <ReactECharts option={barChartOption} style={{ height: "300px" }} />
           </div>
 
-          {/* donut chart card */}
           <div className="bg-white p-4 rounded shadow">
             <ReactECharts option={donutChartOption} style={{ height: "300px" }} />
           </div>
+
         </div>
       </div>
     </AdminLayout>
