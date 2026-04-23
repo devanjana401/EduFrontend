@@ -11,7 +11,6 @@ const VendorDashboard = () => {
   const [date, setDate] = useState("");
   const [recentVideos, setRecentVideos] = useState([]);
 
-  // ✅ dynamic stats
   const [stats, setStats] = useState({
     courses: 0,
     students: 0,
@@ -21,7 +20,7 @@ const VendorDashboard = () => {
 
   const WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-  // ✅ Fetch data
+  // fetch data
   useEffect(() => {
     fetchDashboard();
     fetchRecentVideos();
@@ -29,7 +28,7 @@ const VendorDashboard = () => {
 
   const fetchDashboard = async () => {
     try {
-      // ✅ CORRECT URL
+
       const res = await API.get("vendorside/vendor/dashboard-counts/");
 
       console.log("✅ API RESPONSE:", res.data);
@@ -46,7 +45,7 @@ const VendorDashboard = () => {
     }
   };
 
-  // ✅ Charts (dynamic)
+  // charts
   const barChartOption = {
     title: { text: "Vendor Overview", left: "center" },
     tooltip: { trigger: "axis" },
@@ -87,7 +86,7 @@ const VendorDashboard = () => {
     ],
   };
 
-  // ✅ Clock
+  // time
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -112,7 +111,7 @@ const VendorDashboard = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // ✅ Recent videos
+  // recent videos
   const fetchRecentVideos = async () => {
     try {
       const res = await API.get("/vendorside/recent-videos/");
@@ -150,7 +149,7 @@ const VendorDashboard = () => {
           </div>
         </div>
 
-        {/* Stats */}
+        {/* stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           <StatCard label="Courses" value={stats.courses} color="text-blue-600" />
           <StatCard label="Students" value={stats.students} color="text-green-600" />
@@ -158,7 +157,7 @@ const VendorDashboard = () => {
           <StatCard label="Earnings" value={`₹${stats.earnings}`} color="text-purple-600" />
         </div>
 
-        {/* Charts */}
+        {/* charts */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="bg-white p-4 rounded shadow">
             <ReactECharts option={barChartOption} style={{ height: "300px" }} />
@@ -169,7 +168,7 @@ const VendorDashboard = () => {
           </div>
         </div>
 
-        {/* Recent Videos */}
+        {/* recent videos */}
         <div className="bg-white p-6 rounded shadow">
           <h2 className="text-xl font-bold mb-4">Recent Videos</h2>
 
