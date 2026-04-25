@@ -93,7 +93,7 @@ const MyCourses = () => {
                       </h4>
 
                       <button
-                        onClick={() => handleWatch(course.id, video.id)} // ✅ FIXED
+                        onClick={() => handleWatch(course.id, video.id)} 
                         className="mt-2 w-full bg-blue-600 text-white py-1.5 rounded-md hover:bg-blue-700"
                       >
                         <FaPlay className="inline mr-1" />
