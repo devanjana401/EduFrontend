@@ -13,6 +13,7 @@ const VendorDashboard = () => {
 
   const [stats, setStats] = useState({
     courses: 0,
+    videos: 0,
     students: 0,
     purchases: 0,
     earnings: 0,
@@ -35,6 +36,7 @@ const VendorDashboard = () => {
 
       setStats({
         courses: res.data.courses ?? 0,
+        videos: res.data.videos ?? 0,
         students: res.data.students ?? 0,
         purchases: res.data.purchases ?? 0,
         earnings: res.data.earnings ?? 0,
@@ -150,8 +152,9 @@ const VendorDashboard = () => {
         </div>
 
         {/* stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
           <StatCard label="Courses" value={stats.courses} color="text-blue-600" />
+          <StatCard label="Videos" value={stats.videos} color="text-blue-600" />
           <StatCard label="Students" value={stats.students} color="text-green-600" />
           <StatCard label="Purchases" value={stats.purchases} color="text-orange-500" />
           <StatCard label="Earnings" value={`₹${stats.earnings}`} color="text-purple-600" />
