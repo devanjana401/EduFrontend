@@ -17,6 +17,7 @@ import AdminRoutes from "./routes/AdminRoutes";
 import VendorRoutes from "./routes/VendorRoutes";
 import UserRoutes from "./routes/UserRoutes";
 import ScrollToTop from "./components/ScrollToTop";
+import ChatPage from "./user/pages/ChatPage";
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
         {UserRoutes()}
         {AdminRoutes()}
         {VendorRoutes()}
+
+        <Route path="/chat/:courseId" element={<ChatPage />} />
 
       </Routes>
 

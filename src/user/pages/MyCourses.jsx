@@ -73,6 +73,13 @@ const MyCourses = () => {
                 {course.coursename}
               </h3>
 
+              <button
+                onClick={() => navigate(`/chat/${course.id}`)}
+                className="mb-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+              >
+                💬 Chat
+              </button>
+
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
 
                 {videos[course.id]?.map((video) => (
