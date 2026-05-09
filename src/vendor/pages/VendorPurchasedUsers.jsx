@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../../services/api";
 import VendorLayout from "../components/VendorLayout";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../../components/BackButton";
 
 const VendorPurchasedUsers = () => {
   const [purchases, setPurchases] = useState([]);
@@ -36,6 +37,9 @@ const VendorPurchasedUsers = () => {
 
   return (
     <VendorLayout>
+      <div className="flex justify-start md:items-start items-center mt-4 ml-4 md:w-[40px] w-[60px]">
+        <BackButton/>
+      </div>
       <div className="p-6 bg-slate-50 min-h-screen">
         <h1 className="text-2xl font-bold mb-6">Purchased Students</h1>
 

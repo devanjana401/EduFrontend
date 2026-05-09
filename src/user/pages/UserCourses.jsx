@@ -11,7 +11,7 @@ const UserCourses = () => {
   const [myCourses, setMyCourses] = useState([]); // purchased ids
   const [loading, setLoading] = useState(true);
 
-  // Filters state
+  // filters state
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const initialSearch = searchParams.get("search") || "";
@@ -31,7 +31,7 @@ const UserCourses = () => {
       const [allRes, myRes, catRes] = await Promise.all([
         API.get("userside/public-courses/"),
         API.get("userside/my-courses/"),
-        API.get("vendorside/categories/") // Fetch categories for the filter
+        API.get("vendorside/categories/") // fetch categories for the filter
       ]);
 
       setCourses(allRes.data);
@@ -46,7 +46,7 @@ const UserCourses = () => {
   };
 
   useEffect(() => {
-    // Apply filters locally whenever courses or filter states change
+    // apply filters locally whenever courses or filter states change
     let result = [...courses];
 
     if (searchQuery.trim()) {
@@ -58,7 +58,7 @@ const UserCourses = () => {
     }
 
     if (selectedCategory) {
-      // Assuming course.category returns category ID
+      // assuming course.category returns category ID
       result = result.filter(c => c.category?.toString() === selectedCategory.toString());
     }
 
@@ -66,14 +66,12 @@ const UserCourses = () => {
       result.sort((a, b) => Number(a.price) - Number(b.price));
     } else if (priceSort === "high-to-low") {
       result.sort((a, b) => Number(b.price) - Number(a.price));
-    } else if (priceSort === "free") {
-      result = result.filter(c => Number(c.price) === 0);
     }
 
     setFilteredCourses(result);
   }, [courses, searchQuery, selectedCategory, priceSort]);
 
-  // Sync state if URL query param changes directly
+  // sync state if URL query param changes directly
   useEffect(() => {
     const querySearch = new URLSearchParams(location.search).get("search");
     if (querySearch !== null && querySearch !== searchQuery) {
@@ -105,7 +103,7 @@ const UserCourses = () => {
           </p>
         </div>
 
-        {/* Filters Section */}
+        {/* filters section */}
         <div className="bg-white shadow-lg rounded-2xl p-6 mb-10 border border-slate-100 flex flex-col md:flex-row gap-4 items-center justify-between">
           
           <div className="relative w-full md:w-96">
@@ -115,7 +113,7 @@ const UserCourses = () => {
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
-                // Update URL to match search query
+                // update URL to match search query
                 if (e.target.value) {
                   navigate(`/courses?search=${encodeURIComponent(e.target.value)}`, { replace: true });
                 } else {
@@ -150,7 +148,6 @@ const UserCourses = () => {
               <option value="">Sort by Price</option>
               <option value="low-to-high">Price: Low to High</option>
               <option value="high-to-low">Price: High to Low</option>
-              <option value="free">Free Courses</option>
             </select>
           </div>
         </div>

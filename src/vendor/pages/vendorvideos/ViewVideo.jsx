@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import VendorLayout from "../../components/VendorLayout";
 import API from "../../../services/api";
 import { useParams } from "react-router-dom";
+import BackButton from "../../../components/BackButton";
 
 const ViewVideo = () => {
   const { id } = useParams();
@@ -24,6 +25,9 @@ const ViewVideo = () => {
 
   return (
     <VendorLayout>
+      <div className="flex justify-start md:items-start items-center mt-4 ml-4 md:w-[40px] w-[60px]">
+        <BackButton/>
+      </div>
       <div className="p-8">
 
         <h2 className="text-2xl font-bold mb-4">

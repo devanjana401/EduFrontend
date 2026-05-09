@@ -12,7 +12,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   
-  // Search state
+  // search state
   const [searchQuery, setSearchQuery] = useState("");
   const [courses, setCourses] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
@@ -20,7 +20,7 @@ const Navbar = () => {
   const searchRef = useRef(null);
 
   useEffect(() => {
-    // Fetch courses for search suggestions
+    // fetch courses for search suggestions
     const fetchCourses = async () => {
       try {
         const res = await API.get("userside/public-courses/");
@@ -44,7 +44,7 @@ const Navbar = () => {
   }, [searchQuery, courses]);
 
   useEffect(() => {
-    // Close suggestions when clicking outside
+    // close suggestions when clicking outside
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setShowSuggestions(false);
@@ -81,7 +81,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
 
-          {/* Logo */}
+          {/* logo */}
           <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
             <div className="bg-blue-600 text-white p-2 rounded-xl group-hover:bg-blue-700 transition">
               <IoBookSharp className="text-2xl" />
@@ -89,7 +89,7 @@ const Navbar = () => {
             <span className="font-bold text-2xl lg:text-3xl text-slate-800 hidden sm:block">EduConnect</span>
           </Link>
 
-          {/* Search Bar */}
+          {/* search bar */}
           <div className="flex-1 max-w-md mx-4 lg:mx-8 relative hidden md:block" ref={searchRef}>
             <form onSubmit={handleSearchSubmit} className="relative">
               <input
@@ -106,7 +106,7 @@ const Navbar = () => {
               <IoSearchOutline className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl" />
             </form>
             
-            {/* Search Suggestions Dropdown */}
+            {/* search suggestions dropdown */}
             {showSuggestions && suggestions.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-100 shadow-xl rounded-xl overflow-hidden z-50">
                 <ul className="divide-y divide-slate-100">
@@ -143,7 +143,7 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Desktop Menu */}
+          {/* desktop menu */}
           <div className="hidden lg:flex items-center gap-6 font-medium text-slate-600 flex-shrink-0">
             <Link to="/" className="hover:text-blue-600 transition">Home</Link>
             <Link to="/courses" className="hover:text-blue-600 transition">Courses</Link>
@@ -151,7 +151,7 @@ const Navbar = () => {
             <Link to="/contact" className="hover:text-blue-600 transition">Contact</Link>
           </div>
 
-          {/* Profile / Auth */}
+          {/* profile  */}
           <div className="hidden md:flex items-center gap-4 flex-shrink-0 ml-4">
             {token ? (
               <div className="relative">
@@ -190,7 +190,7 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* mobile menu button */}
           <div className="md:hidden flex items-center gap-4">
             <button onClick={() => setMenuOpen(!menuOpen)}>
               <FaBars size={24} />
@@ -200,7 +200,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* mobile menu */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t shadow">
           <div className="px-4 py-4 space-y-3">

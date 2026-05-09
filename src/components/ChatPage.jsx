@@ -3,20 +3,20 @@ import { useParams } from "react-router-dom";
 import API from "../services/api"; 
 
 const ChatPage = () => {
-    const { courseId, userId } = useParams(); // userId here is the Student ID
+    const { courseId, userId } = useParams(); // userId here is the student ID
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(true);
     const socketRef = useRef(null);
     const bottomRef = useRef(null);
 
-    // Get the logged-in user's ID (could be Student OR Vendor)
+    // get the logged-in user's ID (could be student or vendor)
     const currentUserId = localStorage.getItem("user_id");
 
     useEffect(() => {
         if (!courseId || !userId) return;
 
-        // Fetch previous messages
+        // fetch previous messages
         const fetchHistory = async () => {
             try {
                 const res = await API.get(`/userside/chat/history/${courseId}/${userId}/`);
@@ -29,14 +29,14 @@ const ChatPage = () => {
         };
         fetchHistory();
 
-        // Initialize WebSocket
+        // initialize WebSocket
         const url = `ws://127.0.0.1:8000/ws/chat/${courseId}/${userId}/`;
         const socket = new WebSocket(url);
         socketRef.current = socket;
 
         socket.onmessage = (e) => {
             const data = JSON.parse(e.data);
-            // Append new message to the list
+            // append new message to the list
             setMessages((prev) => [...prev, data]);
         };
 
@@ -46,7 +46,7 @@ const ChatPage = () => {
         return () => socket.close();
     }, [courseId, userId]);
 
-    // Auto-scroll to bottom
+    // auto-scroll to bottom
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
@@ -57,10 +57,10 @@ const ChatPage = () => {
         if (socketRef.current.readyState === WebSocket.OPEN) {
             const payload = {
                 message: input,
-                sender_id: currentUserId // Sending as string/int based on storage
+                sender_id: currentUserId // sending as string/int based on storage
             };
             socketRef.current.send(JSON.stringify(payload));
-            setInput(""); // Clear input field
+            setInput(""); // clear input field
         } else {
             alert("Connection lost. Please refresh.");
         }

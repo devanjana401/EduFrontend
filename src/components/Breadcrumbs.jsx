@@ -6,7 +6,7 @@ const Breadcrumbs = ({ customNames = {} }) => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
 
-  // Example mappings
+  // example mappings
   const routeNameMap = {
     courses: "Courses",
     about: "About Us",
@@ -16,7 +16,7 @@ const Breadcrumbs = ({ customNames = {} }) => {
   };
 
   return (
-    <nav className="flex items-center text-sm font-medium text-slate-500 mb-6 mt-4 whitespace-nowrap overflow-x-auto">
+    <nav className="flex items-center text-xs font-medium text-slate-500 mb-2 mt-2 whitespace-nowrap overflow-x-auto">
       <Link to="/" className="hover:text-blue-600 transition-colors">
         Home
       </Link>
@@ -25,14 +25,14 @@ const Breadcrumbs = ({ customNames = {} }) => {
         const to = `/${pathnames.slice(0, index + 1).join("/")}`;
         const isLast = index === pathnames.length - 1;
 
-        // Try to get a mapped name, or format the raw segment
+        // try to get a mapped name, or format the raw segment
         let displayName = routeNameMap[value];
         if (!displayName) {
-          // Check if it's likely an ID (numbers only)
+          // check if it's likely an ID (numbers only)
           if (/^\d+$/.test(value)) {
             displayName = "Details";
           } else {
-            // Capitalize first letter
+            // capitalize first letter
             displayName = value.charAt(0).toUpperCase() + value.slice(1);
           }
         }

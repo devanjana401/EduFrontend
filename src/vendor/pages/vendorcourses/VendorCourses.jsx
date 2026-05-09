@@ -3,6 +3,7 @@ import VendorLayout from "../../components/VendorLayout";
 import API from "../../../services/api";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import BackButton from "../../../components/BackButton";
 
 const VendorCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -44,6 +45,9 @@ const VendorCourses = () => {
 
   return (
     <VendorLayout>
+      <div className="flex justify-start md:items-start items-center mt-4 ml-4 md:w-[40px] w-[60px]">
+        <BackButton/>
+      </div>
       <div className="p-8 bg-gray-50 min-h-screen">
 
         <h2 className="text-3xl font-bold text-gray-800 mb-8">
