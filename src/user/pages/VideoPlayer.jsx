@@ -39,7 +39,7 @@ const VideoPlayer = () => {
         controls
         autoPlay
         className="w-full max-w-4xl mb-6"
-        src={`http://127.0.0.1:8000${currentVideo.video}`}
+        src={`https://educonnectapi.anjanasasi.online${currentVideo.video}`}
       />
 
       {/* playlist */}

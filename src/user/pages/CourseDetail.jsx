@@ -116,7 +116,7 @@ const CourseDetail = () => {
                   <video
                     controls
                     className="w-full h-full object-cover"
-                    src={`http://127.0.0.1:8000${video.video}`}
+                    src={`https://educonnectapi.anjanasasi.online${video.video}`}
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center">

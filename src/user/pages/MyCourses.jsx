@@ -90,7 +90,7 @@ const MyCourses = () => {
 
                     <video
                       className="w-full h-32 object-cover"
-                      src={`http://127.0.0.1:8000${video.video}`}
+                      src={`https://educonnectapi.anjanasasi.online${video.video}`}
                     />
 
                     <div className="p-3">

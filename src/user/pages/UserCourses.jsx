@@ -77,7 +77,7 @@ const UserCourses = () => {
                   <div className="h-44 overflow-hidden relative bg-slate-200">
                     {course.coverphoto ? (
                       <img
-                        src={`http://127.0.0.1:8000${course.coverphoto}`}
+                        src={`https://educonnectapi.anjanasasi.online${course.coverphoto}`}
                         alt={course.coursename}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />
