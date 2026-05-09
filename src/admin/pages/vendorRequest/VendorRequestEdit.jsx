@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import AdminLayout from "../../components/AdminLayout";
 import API from "../../../services/api";
 import BackButton from "../../../components/BackButton";
+import Popup from "../../../components/Popup";
 
 const VendorRequestEdit = () => {
   const { id } = useParams();
@@ -43,6 +44,18 @@ const VendorRequestEdit = () => {
     });
   };
 
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("success");
+
+  const showPopup = (message, type = "success") => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setPopupOpen(true);
+  };
+
+  const closePopup = () => setPopupOpen(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -56,12 +69,12 @@ const VendorRequestEdit = () => {
       headers: { "Content-Type": "multipart/form-data" },
     })
       .then(() => {
-        alert("Vendor request updated successfully");
-        navigate("/admin/vendor-requests");
+        showPopup("Vendor request updated successfully", "success");
+        setTimeout(() => navigate("/admin/vendor-requests"), 2000);
       })
       .catch((err) => {
         console.error(err.response?.data || err);
-        alert("Failed to update vendor request");
+        showPopup("Failed to update vendor request", "error");
       });
   };
 
@@ -77,10 +90,18 @@ const VendorRequestEdit = () => {
       <div className="flex justify-start md:items-start items-center mb-2 md:w-[40px] w-[60px] ">
         <BackButton/>
       </div>
-      <div className="p-8 flex justify-center">
-        <div className="w-full max-w-3xl bg-white shadow-lg rounded-xl p-8">
+      <div className="p-4 md:p-8 flex justify-center">
+        <div className="w-full max-w-3xl bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-slate-100 relative">
 
-          <h2 className="text-3xl font-bold mb-6 text-gray-800">
+          <Popup
+            message={popupMessage}
+            type={popupType}
+            isOpen={popupOpen}
+            onClose={closePopup}
+            autoClose={3000}
+          />
+
+          <h2 className="text-2xl font-bold mb-6 text-slate-800 tracking-tight">
             Edit Vendor Request
           </h2>
 

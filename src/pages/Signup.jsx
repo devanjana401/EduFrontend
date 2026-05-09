@@ -1,27 +1,38 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../services/api";
+import Popup from "../components/Popup";
 
 const Signup = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("success");
+
   const navigate = useNavigate();
+
+  const showPopup = (message, type = "success") => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setPopupOpen(true);
+  };
+
+  const closePopup = () => setPopupOpen(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== password2) {
-      setError("Passwords do not match");
+      showPopup("Passwords do not match", "error");
       return;
     }
 
     setLoading(true);
-    setError("");
 
     try {
       await API.post("account/signup/", {
@@ -30,11 +41,11 @@ const Signup = () => {
         role: 3
       });
 
-      alert("Account created successfully");
-      navigate("/login");
+      showPopup("Account created successfully! Redirecting...", "success");
+      setTimeout(() => navigate("/login"), 2000);
 
     } catch (err) {
-      setError(err.response?.data?.error || "Signup failed");
+      showPopup(err.response?.data?.error || "Signup failed", "error");
     } finally {
       setLoading(false);
     }
@@ -48,8 +59,16 @@ const Signup = () => {
       <div className="absolute top-0 -right-4 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply blur-2xl opacity-30 animate-blob animation-delay-2000"></div>
       <div className="absolute -bottom-8 left-20 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply blur-2xl opacity-30 animate-blob animation-delay-4000"></div>
 
-      <div className="max-w-md w-full relative">
+      <div className="max-w-md w-full relative z-10">
         <div className="bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 border border-white/50">
+
+          <Popup
+            message={popupMessage}
+            type={popupType}
+            isOpen={popupOpen}
+            onClose={closePopup}
+            autoClose={3000}
+          />
 
           {/* header */}
           <div className="text-center mb-10">
@@ -60,13 +79,6 @@ const Signup = () => {
               Join our learning platform today
             </p>
           </div>
-
-          {/* error */}
-          {error && (
-            <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm mb-6 border border-red-100">
-              {error}
-            </div>
-          )}
 
           {/* form */}
           <form onSubmit={handleSubmit} className="space-y-6">

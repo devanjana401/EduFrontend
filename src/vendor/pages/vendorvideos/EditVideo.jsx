@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import VendorLayout from "../../components/VendorLayout";
 import API from "../../../services/api";
 import { useParams, useNavigate } from "react-router-dom";
+import Popup from "../../../components/Popup";
 
 const EditVideo = () => {
   const { id } = useParams();
@@ -38,6 +39,18 @@ const EditVideo = () => {
     }
   };
 
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("success");
+
+  const showPopup = (message, type = "success") => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setPopupOpen(true);
+  };
+
+  const closePopup = () => setPopupOpen(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,57 +64,77 @@ const EditVideo = () => {
 
     try {
       await API.put(`/vendorside/video-update/${id}/`, data);
-      alert("Video updated successfully");
-      navigate(-1);
+      showPopup("Video updated successfully", "success");
+      setTimeout(() => navigate(-1), 2000);
     } catch (error) {
       console.log(error);
+      showPopup(error.response?.data?.error || "Update failed", "error");
     }
   };
 
   return (
     <VendorLayout>
-      <div className="p-8 max-w-xl">
+      <div className="p-4 md:p-8 flex justify-center">
+        <div className="w-full max-w-xl bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-slate-100 relative">
 
-        <h2 className="text-2xl font-bold mb-4">
-          Edit Video
-        </h2>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            placeholder="Title"
-            className="w-full border p-2 rounded"
-            required
+          <Popup
+            message={popupMessage}
+            type={popupType}
+            isOpen={popupOpen}
+            onClose={closePopup}
+            autoClose={3000}
           />
 
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="Description"
-            className="w-full border p-2 rounded"
-          />
+          <h2 className="text-2xl font-bold mb-6 text-slate-800 tracking-tight">
+            Edit Video
+          </h2>
 
-          <input
-            type="file"
-            name="video"
-            onChange={handleChange}
-            className="w-full"
-          />
+          <form onSubmit={handleSubmit} className="space-y-5">
 
-          <button
-            type="submit"
-            className="bg-green-600 text-white px-4 py-2 rounded"
-          >
-            Update Video
-          </button>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-700 block">Video Title</label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                placeholder="Title"
+                className="w-full border border-slate-200 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                required
+              />
+            </div>
 
-        </form>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-700 block">Description</label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Description"
+                className="w-full border border-slate-200 p-3 rounded-xl min-h-[120px] focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
 
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-700 block">Update Video File</label>
+              <input
+                type="file"
+                name="video"
+                onChange={handleChange}
+                className="w-full border border-slate-200 p-2.5 rounded-xl bg-slate-50 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl shadow-lg transition-all hover:-translate-y-0.5 mt-4"
+            >
+              Update Video
+            </button>
+
+          </form>
+
+        </div>
       </div>
     </VendorLayout>
   );

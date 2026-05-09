@@ -1,38 +1,46 @@
 import React, { useState } from "react";
 import API from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
+import Popup from "../components/Popup";
 
 const ResetPassword = () => {
 
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("success");
+
   const navigate = useNavigate();
+
+  const showPopup = (message, type = "success") => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setPopupOpen(true);
+  };
+
+  const closePopup = () => setPopupOpen(false);
 
   const handleReset = async (e) => {
     e.preventDefault();
 
     setLoading(true);
-    setError("");
-    setMessage("");
-
     try {
       const res = await API.post("account/reset-password/", {
         email,
         new_password: newPassword
       });
 
-      setMessage(res.data.message);
+      showPopup(res.data.message, "success");
 
       setTimeout(() => {
         navigate("/login");
       }, 2000);
 
     } catch (err) {
-      setError(err.response?.data?.error || "Something went wrong");
+      showPopup(err.response?.data?.error || "Something went wrong", "error");
     } finally {
       setLoading(false);
     }
@@ -49,6 +57,14 @@ const ResetPassword = () => {
 
         <div className="bg-white/90 backdrop-blur-xl shadow-2xl rounded-3xl p-8 border border-white">
 
+          <Popup
+            message={popupMessage}
+            type={popupType}
+            isOpen={popupOpen}
+            onClose={closePopup}
+            autoClose={3000}
+          />
+
           {/* header */}
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-slate-900 tracking-tight mb-2">
@@ -58,20 +74,6 @@ const ResetPassword = () => {
               Enter your email and new password
             </p>
           </div>
-
-          {/* error */}
-          {error && (
-            <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm mb-4 border border-red-100">
-              {error}
-            </div>
-          )}
-
-          {/* success */}
-          {message && (
-            <div className="bg-green-50 text-green-600 p-4 rounded-xl text-sm mb-4 border border-green-100">
-              {message}
-            </div>
-          )}
 
           {/* form */}
           <form onSubmit={handleReset} className="space-y-5">

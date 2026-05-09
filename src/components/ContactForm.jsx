@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
+import Popup from "./Popup";
 
 const ContactForm = () => {
 
@@ -11,6 +12,18 @@ const ContactForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("success");
+
+  const showPopup = (message, type = "success") => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setPopupOpen(true);
+  };
+
+  const closePopup = () => setPopupOpen(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -53,17 +66,24 @@ const ContactForm = () => {
         "rfuFFYZhu0_J3KVCq"
       )
       .then(() => {
-        alert("Message sent successfully!");
+        showPopup("Message sent successfully!", "success");
         setFormData({ name: "", email: "", phone: "", message: "" });
       })
       .catch((error) => {
-        alert("Failed to send message");
+        showPopup("Failed to send message", "error");
         console.log(error);
       });
   };
 
   return (
     <div>
+      <Popup
+        message={popupMessage}
+        type={popupType}
+        isOpen={popupOpen}
+        onClose={closePopup}
+        autoClose={3000}
+      />
 
       <h2 className="text-2xl font-bold text-blue-700 mb-2">
         Get In Touch

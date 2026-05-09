@@ -1,15 +1,27 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../services/api";
+import Popup from "../components/Popup";
 
 const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("success");
+
   const navigate = useNavigate();
+
+  const showPopup = (message, type = "success") => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setPopupOpen(true);
+  };
+
+  const closePopup = () => setPopupOpen(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,18 +37,22 @@ const Login = () => {
       localStorage.setItem("role", role);
       localStorage.setItem("email", userEmail);
 
-      if (role === 1) navigate("/admin");
-      else if (role === 2) navigate("/vendor");
-      else navigate("/");
+      showPopup("Login successful! Redirecting...", "success");
+
+      setTimeout(() => {
+        if (role === 1) navigate("/admin");
+        else if (role === 2) navigate("/vendor");
+        else navigate("/");
+      }, 1500);
 
     } catch (err) {
       const errorMsg = err.response?.data?.error || "Invalid credentials";
 
       if (errorMsg.toLowerCase().includes("invalid")) {
-        setError("No account found. Please sign up.");
+        showPopup("No account found. Please sign up.", "error");
         setTimeout(() => navigate("/signup"), 1500);
       } else {
-        setError(errorMsg);
+        showPopup(errorMsg, "error");
       }
 
     } finally {
@@ -52,8 +68,16 @@ const Login = () => {
       <div className="absolute top-0 -right-4 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-blob animation-delay-2000"></div>
       <div className="absolute -bottom-8 left-20 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-blob animation-delay-4000"></div>
 
-      <div className="max-w-md w-full relative">
+      <div className="max-w-md w-full relative z-10">
         <div className="bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 border border-white/50">
+
+          <Popup
+            message={popupMessage}
+            type={popupType}
+            isOpen={popupOpen}
+            onClose={closePopup}
+            autoClose={3000}
+          />
 
           {/* header */}
           <div className="text-center mb-10">
@@ -64,13 +88,6 @@ const Login = () => {
               Please sign in to your account
             </p>
           </div>
-
-          {/* error */}
-          {error && (
-            <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm mb-6 border border-red-100 flex items-start gap-3">
-              {error}
-            </div>
-          )}
 
           {/* form */}
           <form onSubmit={handleLogin} className="space-y-6">

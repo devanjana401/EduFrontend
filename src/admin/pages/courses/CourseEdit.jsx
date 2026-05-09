@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import AdminLayout from "../../components/AdminLayout";
 import API from "../../../services/api";
 import BackButton from "../../../components/BackButton";
+import Popup from "../../../components/Popup";
 
 const CourseEdit = () => {
   const { id } = useParams();
@@ -46,6 +47,18 @@ const CourseEdit = () => {
     });
   };
 
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("success");
+
+  const showPopup = (message, type = "success") => {
+    setPopupMessage(message);
+    setPopupType(type);
+    setPopupOpen(true);
+  };
+
+  const closePopup = () => setPopupOpen(false);
+
   // update course (PATCH + only required fields)
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -61,12 +74,12 @@ const CourseEdit = () => {
 
       await API.patch(`vendorside/course/update/${id}/`, data);
 
-      alert("Updated Successfully ✅");
-      navigate("/admin/courses");
+      showPopup("Updated Successfully ✅", "success");
+      setTimeout(() => navigate("/admin/courses"), 2000);
 
     } catch (err) {
       console.log("Update error:", err.response?.data); // 🔥 debug
-      alert("Update Failed ❌");
+      showPopup(err.response?.data?.error || "Update Failed ❌", "error");
     }
   };
 
@@ -75,69 +88,95 @@ const CourseEdit = () => {
       <div className="flex justify-start md:items-start items-center mb-2 md:w-[40px] w-[60px] ">
         <BackButton/>
       </div>
-      <div className="p-6 max-w-2xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6">Edit Course</h2>
+      <div className="p-4 md:p-8 flex justify-center">
+        <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-slate-100 relative">
 
-        <form onSubmit={handleUpdate} className="space-y-4">
-
-          <input
-            type="text"
-            name="coursename"
-            value={course.coursename}
-            onChange={handleChange}
-            placeholder="Course Name"
-            className="w-full border p-2 rounded"
-            required
+          <Popup
+            message={popupMessage}
+            type={popupType}
+            isOpen={popupOpen}
+            onClose={closePopup}
+            autoClose={3000}
           />
 
-          <input
-            type="text"
-            name="headline"
-            value={course.headline}
-            onChange={handleChange}
-            placeholder="Headline"
-            className="w-full border p-2 rounded"
-            required
-          />
+          <h2 className="text-2xl font-bold mb-6 text-slate-800 tracking-tight">Edit Course</h2>
 
-          <textarea
-            name="description"
-            value={course.description}
-            onChange={handleChange}
-            placeholder="Description"
-            className="w-full border p-2 rounded"
-            rows="3"
-            required
-          />
+          <form onSubmit={handleUpdate} className="space-y-5">
 
-          <textarea
-            name="about"
-            value={course.about}
-            onChange={handleChange}
-            placeholder="About"
-            className="w-full border p-2 rounded"
-            rows="3"
-            required
-          />
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-700 block">Course Name</label>
+              <input
+                type="text"
+                name="coursename"
+                value={course.coursename}
+                onChange={handleChange}
+                placeholder="Course Name"
+                className="w-full border border-slate-200 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                required
+              />
+            </div>
 
-          <input
-            type="number"
-            name="price"
-            value={course.price}
-            onChange={handleChange}
-            placeholder="Price"
-            className="w-full border p-2 rounded"
-            required
-          />
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-700 block">Headline</label>
+              <input
+                type="text"
+                name="headline"
+                value={course.headline}
+                onChange={handleChange}
+                placeholder="Headline"
+                className="w-full border border-slate-200 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                required
+              />
+            </div>
 
-          <button
-            type="submit"
-            className="bg-black text-white px-4 py-2 rounded hover:opacity-80"
-          >
-            Update Course
-          </button>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-700 block">Description</label>
+              <textarea
+                name="description"
+                value={course.description}
+                onChange={handleChange}
+                placeholder="Description"
+                className="w-full border border-slate-200 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                rows="3"
+                required
+              />
+            </div>
 
-        </form>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-700 block">About</label>
+              <textarea
+                name="about"
+                value={course.about}
+                onChange={handleChange}
+                placeholder="About"
+                className="w-full border border-slate-200 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                rows="3"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-700 block">Price</label>
+              <input
+                type="number"
+                name="price"
+                value={course.price}
+                onChange={handleChange}
+                placeholder="Price"
+                className="w-full border border-slate-200 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl shadow-lg transition-all hover:-translate-y-0.5 mt-4"
+            >
+              Update Course
+            </button>
+
+          </form>
+        </div>
       </div>
     </AdminLayout>
   );
