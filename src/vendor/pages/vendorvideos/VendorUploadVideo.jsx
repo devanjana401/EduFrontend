@@ -3,6 +3,7 @@ import VendorLayout from "../../components/VendorLayout";
 import API from "../../../services/api";
 import { useParams, useNavigate } from "react-router-dom";
 import Popup from "../../../components/Popup";
+import BackButton from "../../../components/BackButton";
 
 const VendorUploadVideo = () => {
 
@@ -81,6 +82,10 @@ const VendorUploadVideo = () => {
   return (
 
     <VendorLayout>
+
+      <div className="flex justify-start md:items-start items-center mt-4 ml-4 md:w-[40px] w-[60px]">
+        <BackButton/>
+      </div>
 
       <div className="p-4 md:p-8 bg-slate-50 min-h-screen">
 

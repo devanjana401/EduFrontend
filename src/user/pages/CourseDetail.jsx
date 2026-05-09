@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../../services/api";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaLock, FaRupeeSign } from "react-icons/fa";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
 const CourseDetail = () => {
 
@@ -56,8 +57,10 @@ const CourseDetail = () => {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
+      <div className="max-w-6xl mx-auto">
+        <Breadcrumbs customNames={{ [id]: course.coursename }} />
 
-      <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
+        <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
 
         <div>
           <h2 className="text-2xl font-bold text-gray-800">
@@ -146,6 +149,7 @@ const CourseDetail = () => {
 
       )}
 
+      </div>
     </div>
   );
 };

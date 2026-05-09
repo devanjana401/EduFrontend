@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -50,6 +51,7 @@ const MyCourses = () => {
     <div className="min-h-screen bg-slate-50 py-10 px-4">
 
       <div className="max-w-6xl mx-auto mb-10">
+        <Breadcrumbs />
         <h2 className="text-3xl font-bold text-slate-800">
           My Courses
         </h2>

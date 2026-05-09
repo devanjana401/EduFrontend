@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../../services/api";
 import VendorLayout from "../components/VendorLayout";
 import Popup from "../../components/Popup";
+import BackButton from "../../components/BackButton";
 
 const VendorProfile = () => {
   const [vendor, setVendor] = useState(null);
@@ -83,6 +84,9 @@ const VendorProfile = () => {
 
   return (
     <VendorLayout>
+      <div className="flex justify-start md:items-start items-center mt-4 ml-4 md:w-[40px] w-[60px]">
+        <BackButton/>
+      </div>
       <div className="p-4 md:p-8 bg-slate-50 min-h-screen">
         <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-slate-100 relative">
 
