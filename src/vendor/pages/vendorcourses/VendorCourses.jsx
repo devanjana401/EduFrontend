@@ -73,7 +73,7 @@ const VendorCourses = () => {
                 <img
                   src={
                     course.coverphoto
-                      ? `http://localhost:8000${course.coverphoto}`
+                      ? `https://educonnectapi.anjanasasi.online${course.coverphoto}`
                       : "/default.png"
                   }
                   alt=""

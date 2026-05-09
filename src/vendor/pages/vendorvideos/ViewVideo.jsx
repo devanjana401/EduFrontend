@@ -33,7 +33,7 @@ const ViewVideo = () => {
         <video
           controls
           className="w-full max-w-3xl rounded"
-          src={`http://localhost:8000${video.video}`}
+          src={`https://educonnectapi.anjanasasi.online${video.video}`}
         />
 
         <p className="mt-4 text-gray-600">

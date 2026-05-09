@@ -129,7 +129,7 @@ const VendorVideos = () => {
               <video
                 controls
                 className="w-full h-44 object-cover"
-                src={`http://localhost:8000${video.video}`}
+                src={`https://educonnectapi.anjanasasi.online${video.video}`}
               />
 
               <h3 className="font-bold mt-3">
