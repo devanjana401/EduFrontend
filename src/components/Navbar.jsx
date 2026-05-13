@@ -152,7 +152,7 @@ const Navbar = () => {
           </div>
 
           {/* profile  */}
-          <div className="hidden md:flex items-center gap-4 flex-shrink-0 ml-4">
+          <div className="hidden lg:flex items-center gap-4 flex-shrink-0 ml-4">
             {token ? (
               <div className="relative">
                 <button
@@ -191,7 +191,7 @@ const Navbar = () => {
           </div>
 
           {/* mobile menu button */}
-          <div className="md:hidden flex items-center gap-4">
+          <div className="lg:hidden flex items-center gap-4">
             <button onClick={() => setMenuOpen(!menuOpen)}>
               <FaBars size={24} />
             </button>
@@ -202,7 +202,7 @@ const Navbar = () => {
 
       {/* mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t shadow">
+        <div className="lg:hidden bg-white border-t shadow">
           <div className="px-4 py-4 space-y-3">
             
             <form onSubmit={handleSearchSubmit} className="relative mb-4">
@@ -220,6 +220,17 @@ const Navbar = () => {
             <Link to="/courses" className="block py-2 hover:text-blue-600 font-medium border-b border-slate-50">Courses</Link>
             <Link to="/about" className="block py-2 hover:text-blue-600 font-medium border-b border-slate-50">About</Link>
             <Link to="/contact" className="block py-2 hover:text-blue-600 font-medium border-b border-slate-50">Contact</Link>
+
+            {/* profile section */}
+            {token && (
+              <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+                <FaUserCircle className="text-4xl text-slate-500" />
+                <div>
+                  <p className="text-sm text-slate-500">Signed in as</p>
+                  <p className="font-medium text-slate-800 truncate">{email}</p>
+                </div>
+              </div>
+            )}
 
             {token ? (
               <button
