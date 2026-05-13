@@ -7,7 +7,7 @@ import BackButton from "../../../components/BackButton";
 
 const VendorUploadVideo = () => {
 
-  const { id } = useParams();   // course id
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [videoData, setVideoData] = useState({
@@ -16,16 +16,7 @@ const VendorUploadVideo = () => {
     video: null
   });
 
-  const handleChange = (e) => {
-
-    const { name, value, files } = e.target;
-
-    setVideoData({
-      ...videoData,
-      [name]: files ? files[0] : value
-    });
-
-  };
+  const [uploading, setUploading] = useState(false);
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
@@ -39,16 +30,29 @@ const VendorUploadVideo = () => {
 
   const closePopup = () => setPopupOpen(false);
 
+  const handleChange = (e) => {
+
+    const { name, value, files } = e.target;
+
+    setVideoData({
+      ...videoData,
+      [name]: files ? files[0] : value
+    });
+
+  };
+
   const handleSubmit = async (e) => {
 
     e.preventDefault();
+
+    setUploading(true);
 
     const formData = new FormData();
 
     formData.append("title", videoData.title);
     formData.append("description", videoData.description);
     formData.append("video", videoData.video);
-    formData.append("course", id);   
+    formData.append("course", id);
 
     try {
 
@@ -73,7 +77,15 @@ const VendorUploadVideo = () => {
     } catch (error) {
 
       console.log("Upload Error:", error.response?.data || error);
-      showPopup(error.response?.data?.error || "Error uploading video", "error");
+
+      showPopup(
+        error.response?.data?.error || "Error uploading video",
+        "error"
+      );
+
+    } finally {
+
+      setUploading(false);
 
     }
 
@@ -84,7 +96,7 @@ const VendorUploadVideo = () => {
     <VendorLayout>
 
       <div className="flex justify-start md:items-start items-center mt-4 ml-4 md:w-[40px] w-[60px]">
-        <BackButton/>
+        <BackButton />
       </div>
 
       <div className="p-4 md:p-8 bg-slate-50 min-h-screen">
@@ -126,6 +138,7 @@ const VendorUploadVideo = () => {
               <label className="text-sm font-semibold text-slate-700 block">
                 Video File
               </label>
+
               <input
                 type="file"
                 name="video"
@@ -136,11 +149,22 @@ const VendorUploadVideo = () => {
               />
             </div>
 
+            {uploading && (
+              <p className="text-sm text-blue-600 font-medium text-center">
+                Uploading video, please wait...
+              </p>
+            )}
+
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 hover:-translate-y-0.5 transition-all text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg w-full"
+              disabled={uploading}
+              className={`w-full text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition-all duration-300 ${
+                uploading
+                  ? "bg-blue-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700 hover:-translate-y-0.5"
+              }`}
             >
-              Upload Video
+              {uploading ? "Uploading..." : "Upload Video"}
             </button>
 
           </form>
@@ -152,6 +176,7 @@ const VendorUploadVideo = () => {
     </VendorLayout>
 
   );
+
 };
 
 export default VendorUploadVideo;
