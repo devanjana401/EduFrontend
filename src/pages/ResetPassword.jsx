@@ -24,7 +24,7 @@ const ResetPassword = () => {
 
   const closePopup = () => setPopupOpen(false);
 
-  // Step 1: Send OTP
+  // send otp
   const handleRequestOTP = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -39,7 +39,7 @@ const ResetPassword = () => {
     }
   };
 
-  // Step 2: Verify OTP and Reset Password
+  // verify otp and reset password
   const handleVerifyAndReset = async (e) => {
     e.preventDefault();
     setLoading(true);
