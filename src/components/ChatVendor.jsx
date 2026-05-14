@@ -2,19 +2,15 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import API from "../services/api"; 
 import config from "../config";
-
-const ChatPage = () => {
-    const { courseId } = useParams();
-
-    // take user id from localStorage
-    const userId = localStorage.getItem("user_id");
-
+const ChatVendor = () => {
+    const { courseId, userId } = useParams(); // userId here is the student ID
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(true);
     const socketRef = useRef(null);
     const bottomRef = useRef(null);
 
+    // get the logged-in user's ID (could be student or vendor)
     const currentUserId = localStorage.getItem("user_id");
 
     useEffect(() => {
@@ -31,16 +27,16 @@ const ChatPage = () => {
                 setLoading(false);
             }
         };
-
         fetchHistory();
 
         // initialize WebSocket
-       const url = `${config.WS_BASE_URL}/ws/chat/${courseId}/${userId}/`;
+        const url = `${config.WS_BASE_URL}/ws/chat/${courseId}/${userId}/`;
         const socket = new WebSocket(url);
         socketRef.current = socket;
 
         socket.onmessage = (e) => {
             const data = JSON.parse(e.data);
+            // append new message to the list
             setMessages((prev) => [...prev, data]);
         };
 
@@ -50,7 +46,7 @@ const ChatPage = () => {
         return () => socket.close();
     }, [courseId, userId]);
 
-    // auto-scroll
+    // auto-scroll to bottom
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
@@ -61,11 +57,10 @@ const ChatPage = () => {
         if (socketRef.current.readyState === WebSocket.OPEN) {
             const payload = {
                 message: input,
-                sender_id: currentUserId
+                sender_id: currentUserId // sending as string/int based on storage
             };
-
             socketRef.current.send(JSON.stringify(payload));
-            setInput("");
+            setInput(""); // clear input field
         } else {
             alert("Connection lost. Please refresh.");
         }
@@ -75,48 +70,34 @@ const ChatPage = () => {
 
     return (
         <div className="flex flex-col h-[600px] max-w-2xl mx-auto border rounded-lg overflow-hidden shadow-lg bg-white">
-            <div className="bg-indigo-600 p-4 text-white font-bold">
-                Live Support
-            </div>
-
+            <div className="bg-indigo-600 p-4 text-white font-bold">Live Support</div>
+            
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
                 {messages.map((msg, i) => {
+                    // Compare IDs strictly
                     const isMe = String(msg.sender_id) === String(currentUserId);
-
                     return (
-                        <div
-                            key={i}
-                            className={`flex ${isMe ? "justify-end" : "justify-start"}`}
-                        >
-                            <div
-                                className={`max-w-[70%] p-3 rounded-2xl shadow-sm ${
-                                    isMe
-                                        ? "bg-indigo-600 text-white rounded-br-none"
-                                        : "bg-white text-gray-800 border rounded-bl-none"
-                                }`}
-                            >
+                        <div key={i} className={`flex ${isMe ? "justify-end" : "justify-start"}`}>
+                            <div className={`max-w-[70%] p-3 rounded-2xl shadow-sm ${
+                                isMe ? "bg-indigo-600 text-white rounded-br-none" : "bg-white text-gray-800 border rounded-bl-none"
+                            }`}>
                                 <p className="text-sm">{msg.message}</p>
                             </div>
                         </div>
                     );
                 })}
-
                 <div ref={bottomRef} />
             </div>
 
             <div className="p-4 border-t flex gap-2">
-                <input
+                <input 
                     className="flex-1 border rounded-full px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                    onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
                     placeholder="Type your message..."
                 />
-
-                <button
-                    onClick={sendMessage}
-                    className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition"
-                >
+                <button onClick={sendMessage} className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition">
                     Send
                 </button>
             </div>
@@ -124,4 +105,4 @@ const ChatPage = () => {
     );
 };
 
-export default ChatPage;
+export default ChatVendor;

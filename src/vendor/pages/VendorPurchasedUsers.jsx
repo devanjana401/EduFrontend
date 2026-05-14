@@ -29,7 +29,7 @@ const VendorPurchasedUsers = () => {
   const handleChatNavigate = (item) => {
     // item.user_id is the Student who bought the course
     if (item.course_id && item.user_id) {
-      navigate(`/chat/${item.course_id}/${item.user_id}`);
+      navigate(`/chat-vendor/${item.course_id}/${item.user_id}`);
     } else {
       alert("Required IDs missing from the purchase record.");
     }

@@ -18,6 +18,7 @@ import VendorRoutes from "./routes/VendorRoutes";
 import UserRoutes from "./routes/UserRoutes";
 import ScrollToTop from "./components/ScrollToTop";
 import ChatPage from "./components/ChatPage";
+import ChatVendor from "./components/ChatVendor";
 
 function App() {
   return (
@@ -40,7 +41,9 @@ function App() {
         {AdminRoutes()}
         {VendorRoutes()}
 
-        <Route path="/chat/:courseId/:userId" element={<ChatPage />} />
+        <Route path="/chat-vendor/:courseId/:userId" element={<ChatVendor />} />
+          <Route path="/chat/:courseId" element={<ChatPage />} />
+
 
       </Routes>
 

@@ -30,11 +30,12 @@ const Login = () => {
     try {
       const res = await API.post("account/login/", { email, password });
 
-      const { access, role, email: userEmail } = res.data;
+      const { access, role, email: userEmail, user_id } = res.data;
 
       localStorage.setItem("token", access);
       localStorage.setItem("role", role);
       localStorage.setItem("email", userEmail);
+      localStorage.setItem("user_id", user_id);
 
       showPopup("Login successful! Redirecting...", "success");
 
